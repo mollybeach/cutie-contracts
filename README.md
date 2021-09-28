@@ -13,3 +13,14 @@ npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
 ```
+
+
+command line shit 
+1. mkdir ${enter name of new project}
+2. cd ${''}
+3. hardhat init 
+    a. use all the defaults 
+4. yarn install 
+5. copy the packaage.json from a previous project into current package.json
+6. yarn install 
+7. setup your .env 
