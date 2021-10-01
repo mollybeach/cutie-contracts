@@ -1,4 +1,8 @@
 {
   "stackedToadzRink": "0x1710d860034b50177d793e16945B6A25C7d92476",
-  "stackerRink": "0xfBB7Eb7670BA3acdD13f36880342fbd35c491275"
+  "stackerRink": "0xfBB7Eb7670BA3acdD13f36880342fbd35c491275",
+  "stakedToadz": "0x43A565e953df92BBD3D666c75e279F27a6cF363B",
+  "stakedStackedToadzRink": "0x127c4A84274d2c12DC6E344e471896c5508FB5C6",
+  "magicv2lptoken": "0x23cced35b6af194DA689B41F847A79d649b61872",
+  "stackRewardsRink": "0x58BE90d3Ba5cc127e72B4d3B75fe44555b592a1c"
 }

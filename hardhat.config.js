@@ -12,6 +12,10 @@ require("@nomiclabs/hardhat-waffle");
 
 require("./tasks/deploy_stacked_toadz");
 require("./tasks/deploy_stacker");
+require("./tasks/deploy_staked_toadz");
+require("./tasks/deploy_staked_stacked_toads");
+require("./tasks/deploy_stack_rewards");
+require("./tasks/set_start_stacker");
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
