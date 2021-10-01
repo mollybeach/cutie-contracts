@@ -8,13 +8,14 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
 /*
 STACK                               
     */
 
 
-contract Stacker is ERC721URIStorage, Ownable {
+contract Stacker is ERC721URIStorage, Ownable, IERC721Receiver {
     using Strings for uint256;
     event MintStack (address indexed sender, uint256 startWith);
 
@@ -66,7 +67,7 @@ contract Stacker is ERC721URIStorage, Ownable {
         }
     }
 
-    function stack(uint256[] calldata _tokenIds, uint256 stackAmount) public {
+    function stack(uint256[] calldata _tokenIds) public {
         require(started, "not started");
         require(IERC721(unstackedToadAddress).isApprovedForAll(_msgSender(), address(this)), "unstackedToadz not approved for spending");
         require(_tokenIds.length == 3, "you need 3 unstacked toads to stack");
@@ -76,5 +77,14 @@ contract Stacker is ERC721URIStorage, Ownable {
         }
         emit MintStack(_msgSender(), totalToadz+1); //emit a MintStackEvent
         _mint(_msgSender(), 1 + totalToadz++);
+    }
+
+    function onERC721Received(
+        address,
+        address,
+        uint256,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        return IERC721Receiver.onERC721Received.selector;
     }
 }

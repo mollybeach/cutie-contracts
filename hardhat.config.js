@@ -16,6 +16,7 @@ require("./tasks/deploy_staked_toadz");
 require("./tasks/deploy_staked_stacked_toads");
 require("./tasks/deploy_stack_rewards");
 require("./tasks/set_start_stacker");
+require("./tasks/stacker");
 
 /**
  * @type import('hardhat/config').HardhatUserConfig

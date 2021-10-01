@@ -11,19 +11,6 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 /*
 STACK THESE MF'ERS                                
 */
-
-// we are going to create a contract where people can mint unstacked toads 
-// and then they can stake their unstacked toads in a staking contract, which will give them the $STACK token 
-// and then they can use their $STACK token in this contract to stack 3 toads into a triple stack. 
-
-// what token standards does this contract need to be able to interact with? 
-    // ERC20's, in the form of the $STACK token 
-    // ERC721's in the form of unstacked toads 
-    // this contract is actually minting two different types of toads, unstacked toads, and stacked toads. 
-
-// possible issues with this contract - we may find that we need to create a separate contrct to handle the minting of the stacked toads. 
-
-
 contract StackedToadz is ERC721URIStorage, Ownable {
     using Strings for uint256;
     event MintToad (address indexed sender, uint256 startWith, uint256 times);
