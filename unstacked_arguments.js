@@ -1,5 +1,5 @@
 module.exports = [
     "UnStackedToadz",
     "USTACK",
-    "ipfs://"
+    "ipfs://QmNqFAcD5HBdnEHJaKbDGuTFvqu8BvBVgx8J3G1MbNZUD4/"
 ]

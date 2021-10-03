@@ -21,7 +21,7 @@ contract Stacker is ERC721URIStorage, Ownable, IERC721Receiver {
 
     //uints 
     
-    uint256 public totalCount = 2000;
+    uint256 public totalCount = 2999;
     uint256 public maxBatch = 10;
     uint256 public totalToadz;
     address public unstackedToadAddress;

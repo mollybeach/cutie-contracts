@@ -13,15 +13,15 @@ task('deploy-staked-stacked-toadz').setAction(async function () {
 
   const factory = await ethers.getContractFactory('StackedStakedToadz', deployer);
   const instance = await factory.deploy(
-    deployments.stackerRink,
-    deployments.stakedToadz, 
+    deployments.stackerMainnet,
+    deployments.stakedToadzMainnet, 
     RATE,
     EXPIRATION,
   );
   await instance.deployed();
 
   console.log(`Deployed StakedToadz to: ${instance.address}`);
-  deployments.stakedStackedToadzRink = instance.address;
+  deployments.stakedStackedToadzMainnet = instance.address;
 
   const json = JSON.stringify(deployments, null, 2);
   fs.writeFileSync(`${__dirname}/../data/deployments.json`, `${json}\n`, {

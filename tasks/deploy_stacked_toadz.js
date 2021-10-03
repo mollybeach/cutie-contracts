@@ -6,7 +6,7 @@ task('deploy-stacked-toadz').setAction(async function () {
 
   const name = "UnStackedToadz";
   const symbol = "USTACK"
-  const baseURI = "ipfs://"
+  const baseURI = "ipfs://QmNqFAcD5HBdnEHJaKbDGuTFvqu8BvBVgx8J3G1MbNZUD4/"
 
   const factory = await ethers.getContractFactory('StackedToadz', deployer);
 

@@ -8,13 +8,13 @@ task('deploy-stack-rewards').setAction(async function () {
 
   const factory = await ethers.getContractFactory('StackPoolTwo', deployer);
   const instance = await factory.deploy(
-    deployments.stakedToadz,
-    deployments.magicv2lptoken,
+    deployments.stakedToadzMainnet,
+    deployments.stackv2LpTokenMainnet,
   );
   await instance.deployed();
 
-  console.log(`Deployed stackRewardsRink to: ${instance.address}`);
-  deployments.stackRewardsRink = instance.address;
+  console.log(`Deployed stackRewardsMainnet to: ${instance.address}`);
+  deployments.stackRewardsMainnet = instance.address;
 
   const json = JSON.stringify(deployments, null, 2);
   fs.writeFileSync(`${__dirname}/../data/deployments.json`, `${json}\n`, {

@@ -6,21 +6,21 @@ task('deploy-stacker').setAction(async function () {
 
   const name = "StackedToadz";
   const symbol = "STACK"
-  const baseURI = "ipfs://"
+  const baseURI = "ipfs://QmWf3ywafrdzWx6QjUJiRe6NqMkb28rfPj3oBBkokTL199/"
 
   const factory = await ethers.getContractFactory('Stacker', deployer);
 
   const instance = await factory.deploy(
     name,
     symbol,
-    deployments.stackedToadzRink,
+    deployments.stackedToadzMainnet,
     baseURI,
   );
 
   await instance.deployed();
 
-  console.log(`Deployed stackerRink to: ${instance.address}`);
-  deployments.stackerRink = instance.address;
+  console.log(`Deployed stackerMainnet to: ${instance.address}`);
+  deployments.stackerMainnet = instance.address;
 
   const json = JSON.stringify(deployments, null, 2);
   fs.writeFileSync(`${__dirname}/../data/deployments.json`, `${json}\n`, {

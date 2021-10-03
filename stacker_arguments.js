@@ -1,6 +1,7 @@
+const deployments = require('./data/deployments');
 module.exports = [
     "StackedToadz",
     "STACK",
-    "0x1710d860034b50177d793e16945B6A25C7d92476",
-    "ipfs://"
+    deployments.stackedToadzMainnet,
+    "ipfs://QmWf3ywafrdzWx6QjUJiRe6NqMkb28rfPj3oBBkokTL199/"
 ]

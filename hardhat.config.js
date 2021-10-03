@@ -17,6 +17,7 @@ require("./tasks/deploy_staked_stacked_toads");
 require("./tasks/deploy_stack_rewards");
 require("./tasks/set_start_stacker");
 require("./tasks/stacker");
+require("./tasks/set_reward_params");
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -48,6 +49,8 @@ require("./tasks/stacker");
     mainnet: {
       url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_MAINNET_KEY}`,
       accounts: [process.env.ETH_MAIN_KEY],
+      gas: 2900000,
+      gasPrice: 120000000000
     },
 
     rinkeby: {

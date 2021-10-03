@@ -6,21 +6,21 @@ task('deploy-staked-toadz').setAction(async function () {
 
   // approximately 6000 blocks per day
   const RATE = ethers.utils
-    .parseUnits('10', 18)
+    .parseUnits('5', 18)
     .div(ethers.BigNumber.from('6000'));
 
   const EXPIRATION = ethers.BigNumber.from('3600000');
 
   const factory = await ethers.getContractFactory('StakedToadz', deployer);
   const instance = await factory.deploy(
-    deployments.stackedToadzRink,
+    deployments.stackedToadzMainnet,
     RATE,
     EXPIRATION,
   );
   await instance.deployed();
 
-  console.log(`Deployed StakedToadz to: ${instance.address}`);
-  deployments.stakedToadz = instance.address;
+  console.log(`Deployed StakedToadzMainnet to: ${instance.address}`);
+  deployments.stakedToadzMainnet = instance.address;
 
   const json = JSON.stringify(deployments, null, 2);
   fs.writeFileSync(`${__dirname}/../data/deployments.json`, `${json}\n`, {

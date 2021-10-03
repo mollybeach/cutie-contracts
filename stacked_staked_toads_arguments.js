@@ -8,8 +8,8 @@ const RATE = ethers.utils
 const EXPIRATION = ethers.BigNumber.from('3600000');
 
 module.exports = [
-    deployments.stackerRink,
-    deployments.stakedToadz,
+    deployments.stackerMainnet,
+    deployments.stakedToadzMainnet,
     RATE,
     EXPIRATION,
 ]
