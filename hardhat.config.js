@@ -18,6 +18,18 @@ require("./tasks/deploy_stack_rewards");
 require("./tasks/set_start_stacker");
 require("./tasks/stacker");
 require("./tasks/set_reward_params");
+require("./tasks/deploy_fish_rewards");
+require("./tasks/set_fish_rewards");
+require("./tasks/deploy_fixed_staking");
+require("./tasks/set_whitelist");
+require("./tasks/stake_toad");
+require("./tasks/unpause");
+require("./tasks/calculate_rewards");
+require("./tasks/set_brainz_rewards");
+require("./tasks/mint_stack");
+require("./tasks/set_fixed_fish");
+require("./tasks/deploy_anoni");
+require("./tasks/test_reclaim");
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -50,7 +62,7 @@ require("./tasks/set_reward_params");
       url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_MAINNET_KEY}`,
       accounts: [process.env.ETH_MAIN_KEY],
       gas: 2900000,
-      gasPrice: 120000000000
+      gasPrice: 220000000000
     },
 
     rinkeby: {
