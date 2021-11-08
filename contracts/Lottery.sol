@@ -29,21 +29,21 @@ contract Lottery  {
         return contestants.balanceOf(_player);
     }
     //enter a new player into the lottery x times (balance of the player in the StackedToadz contract)
-    function newPlayer(address _player) public payable returns (address[] memory) {
+    function newPlayer(address _player) public onlyOwner returns (address[] memory) {
         for (uint i = 0; i < purchasedTicketsCount(_player); i++) {
             TICKETPOOL.push(_player);
         }
         return TICKETPOOL;
     }
     //create a raffle call each newPlayer function for each address in contestants (StackedToadz)
-    function createRaffle(address[] memory _contestants) public payable returns (address[] memory) {
+    function createRaffle(address[] memory _contestants) public onlyOwner returns (address[] memory) {
         for (uint i = 0; i < _contestants.length; i++) {
             newPlayer(_contestants[i]);
         }
         return TICKETPOOL;
     }
     //draw the raffle and return the winner
-    function drawRaffle(address[] memory _ticketpool) public returns (address) {
+    function drawRaffle(address[] memory _ticketpool) public onlyOwner returns (address) {
        // require(started);
         require(_ticketpool.length > 0);
         address[] memory RAFFLE = createRaffle(_ticketpool);
@@ -52,7 +52,7 @@ contract Lottery  {
         return WINNER;
     }
     // send prize to winner 
-    function givePrize(address[] memory _contestants) payable public {
+    function givePrize(address[] memory _contestants) public onlyOwner  {
         WINNER = drawRaffle(_contestants);
         payable(WINNER).transfer(PRIZE);
         emit DrawRaffle(WINNER, PRIZE);
