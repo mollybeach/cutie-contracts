@@ -12,49 +12,51 @@ import "./StackedToadz.sol";
 and then allows them to claim their prize.*/
 contract Lottery  {
 
-    StackedToadz public contestants;
-    event DrawRaffle(address winner, uint256 prize);
+    event EventJoin(uint _length, uint _qty);
+    event EventDraw(address _winner, uint _prize);
+    event EventPaid(address _from, uint _value);
 
     //uints 
-    uint256 public PRIZE = 10000000000000000; // the prize is 0.1 ether
-    address[] public TICKETPOOL;
-    address WINNER;
+    uint256 public PRIZE = 10000000000000000; // the PRIZE is 0.1 ether
+    uint public PRICE;
+    uint public MAX_TICKETS;
+    address public CREATOR;
+    address[] public CONTESTANTS;
+    address public WINNER;
 
-    //constructor
-    constructor(address _players) {
-        contestants = StackedToadz(_players);
+    function Raffle(uint _maxTickets, uint _price) public onlyOwner {
+        CREATOR = msg.sender;
+        MAX_TICKETS = _maxTickets;
+        PRICE = _price;
+        uint qty = 1;
+        Start(qty);
     }
-    //get the purchased tickets balance of the contestants
-    function purchasedTicketsCount(address _player) public view returns (uint256) {
-        return contestants.balanceOf(_player);
+  //use fallback function to send ether to the contract
+    function () public payable {
+        emit EventPaid(msg.sender, msg.value);
     }
-    //enter a new player into the lottery x times (balance of the player in the StackedToadz contract)
-    function newPlayer(address _player) public onlyOwner returns (address[] memory) {
-        for (uint i = 0; i < purchasedTicketsCount(_player); i++) {
-            TICKETPOOL.push(_player);
+
+    function Start(uint _qty) public onlyOwner returns(bool) {
+        require(PRICE * _qty > msg.value);
+        require(int(CONTESTANTS.length) < int(MAX_TICKETS - _qty));
+        for (uint i = 0; i < _qty; i++) {
+            CONTESTANTS.push(msg.sender);
         }
-        return TICKETPOOL;
-    }
-    //create a raffle call each newPlayer function for each address in contestants (StackedToadz)
-    function createRaffle(address[] memory _contestants) public onlyOwner returns (address[] memory) {
-        for (uint i = 0; i < _contestants.length; i++) {
-            newPlayer(_contestants[i]);
+        emit EventJoin (CONTESTANTS.length, _qty);
+        if (CONTESTANTS.length == MAX_TICKETS) {
+            return Draw();
         }
-        return TICKETPOOL;
+        return true;
     }
-    //draw the raffle and return the winner
-    function drawRaffle(address[] memory _ticketpool) public onlyOwner returns (address) {
-       // require(started);
-        require(_ticketpool.length > 0);
-        address[] memory RAFFLE = createRaffle(_ticketpool);
-        uint256 randomNumber = uint256(block.timestamp) % uint256(TICKETPOOL.length-1);
-        WINNER = RAFFLE[randomNumber];
-        return WINNER;
-    }
-    // send prize to winner 
-    function givePrize(address[] memory _contestants) public onlyOwner  {
-        WINNER = drawRaffle(_contestants);
+  // award PRIZE when all tickets are sold
+    function Draw() public onlyOwner returns (bool) {
+        uint256 randomNumber = uint256(block.timestamp) % uint256( CONTESTANTS.length-1);
+        WINNER = CONTESTANTS[randomNumber];
+        PRIZE = address(this).balance; 
         payable(WINNER).transfer(PRIZE);
-        emit DrawRaffle(WINNER, PRIZE);
+        emit EventDraw (address(WINNER), PRIZE);
+        return true;
     }
 }
+
+
