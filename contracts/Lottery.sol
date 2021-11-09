@@ -37,8 +37,7 @@ contract Lottery  {
     address public TOKEN_ADDRESS;
     address public WINNER;
     address[] public TICKETBAG;
-    address[] public EMPTY_TICKETBAG;
-    
+
     //bools
     bool public LOTTO_LIVE;
 
@@ -56,17 +55,17 @@ contract Lottery  {
         require(!LOTTO_LIVE);
         LOTTO_LIVE = true;
         TICKETS = 0;
-        TICKETBAG = EMPTY_TICKETBAG;
         buyTickets(AMOUNT_MAPPING[msg.sender]);
     }
 
     //all stack users can buy tickets
-    function buyTickets(uint256 _qty) public view {
-        require(LOTTO_LIVE = true);
+    function buyTickets(uint256 _qty) public payable{
+        require(LOTTO_LIVE);
         require(msg.value >= PRICE * _qty);
-        AMOUNT_MAPPING[msg.sender] = _qty;
         require(_qty > 0);
         require(TICKETBAG.length + _qty <= MAX_TICKETS);
+        require(TICKETBAG.length < MAX_TICKETS);
+        AMOUNT_MAPPING[msg.sender] = _qty;
         IERC20(tokenAddress).transfer(address(this), PRICE * _qty);
         for (uint256 i = 0; i < _qty; i++) {
         TICKETBAG.push(msg.sender);
@@ -79,7 +78,6 @@ contract Lottery  {
 
     //roll for a winner
     function draw() public onlyOwner view returns(address){
-        require(TICKETBAG.length == MAX_TICKETS);
         require(TICKETBAG.length > 0);
         require(LOTTO_LIVE);
         uint256 randomNum = uint256(block.timestamp) % uint256(TICKETBAG.length-1);
@@ -95,7 +93,9 @@ contract Lottery  {
         payable(WINNER).transfer(PRIZE);
         emit ClaimEvent(WINNER, PRIZE);
         LOTTO_LIVE = false;
-        TICKETBAG = EMPTY_TICKETBAG;
+        //reset the ticket bag with Array() constructor 
+        TICKETBAG = Array();
+
     }
 
 }
