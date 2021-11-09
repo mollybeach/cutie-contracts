@@ -33,11 +33,14 @@ contract Lottery  {
     uint256 public PRICE = 10000000000000000; //the price is 0.001 ether                            
     uint256 public TICKETS; 
     
+    
 
     //addresses
+    address public TOKEN_ADDRESS;
+    address public WINNER;
     address[] public TICKETBAG;
     address[] public EMPTY_TICKETBAG;
-    address WINNER;
+    
 
     //bools
     bool public LOTTO_LIVE;
