@@ -111,13 +111,13 @@ contract StakedToadz is ERC20Burnable, Ownable, IERC721Receiver, ReentrancyGuard
     //reward claim function 
     function claimRewards(uint256[] calldata tokenIds) public {
       uint256 reward; 
-      uint256 block = Math.min(block.number, expiration);
+      uint256 blocked = Math.min(block.number, expiration);
 
       uint256[] memory rewards = calculateRewards(msg.sender, tokenIds);
 
       for (uint256 i; i < tokenIds.length; i++) {
         reward += rewards[i];
-        _depositBlocks[msg.sender][tokenIds[i]] = block;
+        _depositBlocks[msg.sender][tokenIds[i]] = blocked;
       }
 
       if (reward > 0) {

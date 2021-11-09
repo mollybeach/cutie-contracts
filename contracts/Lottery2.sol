@@ -82,7 +82,7 @@ contract Lottery  {
         return WINNER;
     }
 
-    //pay out the winner and reset the lottery
+ //pay out the winner and reset the lottery
     function endLotto() public onlyOwner payable {
         require(LOTTO_LIVE);
         WINNER = draw(TICKETBAG);
