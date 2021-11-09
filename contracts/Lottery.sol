@@ -6,55 +6,100 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./StackedToadz.sol";
 
-/*write a contract called Lottery that enters users into a raffle from the StackedToadz.sol contract
-and then allows them to claim their prize.*/
+/* 
+LOTTERY CONTRACT
+GOALS: 
+    Write a contract that enters users into a raffle from the Stacked Toadz contract.
+INFO: 
+    The owner must purchase the first ticket on creation,
+    contestants can buy as many tickets as are available
+    The prize is awarded to a random winner when the tickets are all sold out
+*/
+
 contract Lottery  {
+    
+    //events 
+    event JoinEvent(uint256 _length, uint _qty);
+    event DrawEvent(address winner);
+    event ClaimEvent(address _winner, uint256 _prize);
 
-    StackedToadz public contestants;
-    event DrawRaffle(address winner, uint256 prize);
+    //uint256
+    uint256 public MAX_TICKETS = 999;
+    uint256 public PRIZE = 10000000000000000; // the prize is 0.1 ether 
+    uint256 public PRICE = 10000000000000000; //the price is 0.001 ether                            
+    uint256 public TICKETS; 
+    
+        //addresses
+    address public TOKEN_ADDRESS;
+    address public WINNER;
+    address[] public TICKETBAG;
 
-    //uints 
-    uint256 public PRIZE = 10000000000000000; // the prize is 0.1 ether
-    address[] public TICKETPOOL;
-    address WINNER;
+    //bools
+    bool public LOTTO_LIVE;
+
+    //mappings 
+    mapping(address => uint256) public AMOUNT_MAPPING;
 
     //constructor
-    constructor(address _players) {
-        contestants = StackedToadz(_players);
+    constructor() public {
+        TICKETS = 0;
+        LOTTO_LIVE = false;
     }
-    //get the purchased tickets balance of the contestants
-    function purchasedTicketsCount(address _player) public view returns (uint256) {
-        return contestants.balanceOf(_player);
+
+    //functions
+    function startLotto() public onlyOwner(){
+        require(!LOTTO_LIVE);
+        LOTTO_LIVE = true;
+        TICKETS = 0;
+        buyTickets(AMOUNT_MAPPING[msg.sender]);
     }
-    //enter a new player into the lottery x times (balance of the player in the StackedToadz contract)
-    function newPlayer(address _player) public onlyOwner returns (address[] memory) {
-        for (uint i = 0; i < purchasedTicketsCount(_player); i++) {
-            TICKETPOOL.push(_player);
+
+    //all stack users can buy tickets
+    function buyTickets(uint256 _qty) public payable{
+        require(LOTTO_LIVE);
+        require(msg.value >= PRICE * _qty);
+        require(_qty > 0);
+        require(TICKETBAG.length + _qty <= MAX_TICKETS);
+        require(TICKETBAG.length < MAX_TICKETS);
+        AMOUNT_MAPPING[msg.sender] = _qty;
+        IERC20(tokenAddress).transfer(address(this), PRICE * _qty);
+        for (uint256 i = 0; i < _qty; i++) {
+        TICKETBAG.push(msg.sender);
         }
-        return TICKETPOOL;
-    }
-    //create a raffle call each newPlayer function for each address in contestants (StackedToadz)
-    function createRaffle(address[] memory _contestants) public onlyOwner returns (address[] memory) {
-        for (uint i = 0; i < _contestants.length; i++) {
-            newPlayer(_contestants[i]);
+        emit JoinEvent (TICKETBAG.length, _qty);
+        if(TICKETBAG.length == MAX_TICKETS) {
+            endLotto();
         }
-        return TICKETPOOL;
     }
-    //draw the raffle and return the winner
-    function drawRaffle(address[] memory _ticketpool) public onlyOwner returns (address) {
-       // require(started);
-        require(_ticketpool.length > 0);
-        address[] memory RAFFLE = createRaffle(_ticketpool);
-        uint256 randomNumber = uint256(block.timestamp) % uint256(TICKETPOOL.length-1);
-        WINNER = RAFFLE[randomNumber];
+
+    //roll for a winner
+    function draw() public onlyOwner view returns(address){
+        require(TICKETBAG.length > 0);
+        require(LOTTO_LIVE);
+        uint256 randomNum = uint256(block.timestamp) % uint256(TICKETBAG.length-1);
+        WINNER = TICKETBAG[randomNum];
+        emit DrawEvent(WINNER);
         return WINNER;
     }
-    // send prize to winner 
-    function givePrize(address[] memory _contestants) public onlyOwner  {
-        WINNER = drawRaffle(_contestants);
+
+    //pay out the winner and reset the lottery
+    function endLotto() public onlyOwner payable {
+        require(LOTTO_LIVE);
+        WINNER = draw(TICKETBAG);
         payable(WINNER).transfer(PRIZE);
-        emit DrawRaffle(WINNER, PRIZE);
+        emit ClaimEvent(WINNER, PRIZE);
+        LOTTO_LIVE = false;
+        //reset the ticket bag with Array() constructor 
+        TICKETBAG = Array();
+
     }
+
 }
+
+
+
+    
