@@ -13,6 +13,7 @@
   "function buyTickets(uint256 _qty, uint256 amount)",
   "function draw() returns (address)",
   "function endLotto() returns (address)",
+  "function getNum() view returns (uint256)",
   "function getNumber() view returns (uint256)",
   "function number() view returns (uint256)",
   "function owner() view returns (address)",
