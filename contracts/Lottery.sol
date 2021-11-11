@@ -49,11 +49,9 @@ contract Lottery is Ownable {
     function getPrice() public view returns (uint256) {
         return PRICE;
     }
-/* 
-    //functions
     function getTickets() public view returns (uint256) {
         return TICKETS;
-    }*/
+    }
 
     function startLotto() public onlyOwner returns (bool) {
         require(!LOTTO_LIVE);

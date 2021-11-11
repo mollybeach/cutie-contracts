@@ -5,7 +5,7 @@ const BN = require('bn.js');
 chai.use(require('chai-bn')(BN));
 
 describe('LotteryContract Unit Test', function () {
-    let accounts, contractOwner, lotteryContract, MAX_TICKETS = 999, PRICE = 5000000000000000000;
+    let accounts, contractOwner, lotteryContract, MAX_TICKETS = 999, PRICE = 5000000000000000000, QUANTITY = 1, AMOUNT = 1;
     before(async function () {
         accounts = await ethers.getSigners();
         contractOwner = accounts[0];
@@ -30,14 +30,25 @@ describe('LotteryContract Unit Test', function () {
     it('Lottery has started ', async function () {
         expect((await lotteryContract.callStatic.startLotto()).toString()).to.equal('true');
     });
-
-/* 
-    it('Check that price is equal to PRICE') , async function () {
-        const price = await lotteryContract.callStatic.getPrice(params);
-        expect(price).to.equal(PRICE);
-    }
-           // await lotteryContract.setOwner(contractOwner.address);
-    */
-
+/*  write it test functions for these solidity functions:
+        function startLotto() public onlyOwner returns (bool)
+        function buyTickets(uint256 _qty, uint256 amount) public
+        function draw() public onlyOwner returns(address)
+        function endLotto() public onlyOwner returns(address)
+        function withdrawTokens() 
+*/
+  /*  it('Bought tickets in the lottery ', async function () {
+        await lotteryContract.callStatic.buyTickets(QUANTITY, AMOUNT);
+    });
+    it('Draw from lottery', async function () {
+        await lotteryContract.callStatic.draw();
+    });
+    it('End lottery', async function () {
+        await lotteryContract.callStatic.endLotto();
+    });
+    it('Withdraw tokens', async function () {
+        await lotteryContract.callStatic.withdrawTokens();
+    });
+*/
 });
 
