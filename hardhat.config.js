@@ -98,5 +98,8 @@ require("./tasks/set_stacked_staked_rewards");
     overwrite: false,
     runOnCompile: true,
   },
+  mocha: {
+    timeout: 3000000
+  }
 };
 

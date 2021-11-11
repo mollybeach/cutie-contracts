@@ -1,32 +1,25 @@
-const { expect } = require("chai");
-const { ethers, network } = require("hardhat");
+const { expect } = require('chai');
 
-describe("Lottery", function () {
-    //this.timeout(100000);
-    let accounts, contractOwner, lotteryContract, MAX_TICKETS = 999, PRICE = 5000000000000000000;
-    before(async () => {
-        console.log("before function running");
+var chai = require('chai');
+const BN = require('bn.js');
+chai.use(require('chai-bn')(BN));
+
+describe('LotteryContract Unit Test', function () {
+    before(async function () {
         accounts = await ethers.getSigners();
         contractOwner = accounts[0];
-      //  console.log('Contract Owner: ' + accounts);
-        const contractFactory = await ethers.getContractFactory("Lottery", contractOwner);
-        lotteryContract = await contractFactory.deploy(
-            contractOwner.address,
-        );
-        console.log("Lottery Contract" + lotteryContract);
+        LotteryContract = await ethers.getContractFactory('Lottery', contractOwner);
+        lotteryContract = await LotteryContract.deploy(contractOwner.address);
         await lotteryContract.deployed();
-        console.log('Lottery Contract: Deployed');
     });
-    beforeEach(async function (){
-        console.log('before each function running');
-        await lotteryContract.callStatic.setNumber(0);
-    })
-    it('Intial value is set to 0'), async function () {
-        console.log('it function running ')
-        const number = await lotteryContract.callStatic.getNumber();
-        console.log('number: ' + number);
-        expect(number).to.equal(0);
-    }
+
+    beforeEach(async function () {
+        await lotteryContract.setNumber(0);
+    });
+
+    it('Initial value is set to 0', async function () {
+        expect((await lotteryContract.getNumber()).toString()).to.equal('0');
+    });
 /* it('Lottery is not started'), async function () {
         const started = await lotteryContract.callStatic.checkStarted();
         expect(started).to.equal(false);
