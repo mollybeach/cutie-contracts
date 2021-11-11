@@ -9,7 +9,7 @@ describe('LotteryContract Unit Test', function () {
     before(async function () {
         accounts = await ethers.getSigners();
         contractOwner = accounts[0];
-        LotteryContract = await ethers.getContractFactory('Lottery', contractOwner);
+        let LotteryContract = await ethers.getContractFactory('Lottery', contractOwner);
         lotteryContract = await LotteryContract.deploy(contractOwner.address);
         await lotteryContract.deployed();
     });
