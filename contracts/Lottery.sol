@@ -6,22 +6,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-/* 
-LOTTERY CONTRACT
-GOALS: 
-    Write a contract that enters users into a raffle from the Stacked Toadz contract.
-INFO: 
-    The owner must purchase the first ticket on creation,
-    contestants can buy as many tickets as are available
-    The prize is awarded to a random winner when the tickets are all sold out
-*/
 
 contract Lottery is Ownable {
     
     //events 
     event JoinEvent(uint256 _length, uint _qty);
     event DrawEvent(address winner);
-    event ClaimEvent(address _winner, uint256 _prize);
 
     //uint256
     uint256 public MAX_TICKETS = 999;
@@ -91,5 +81,8 @@ contract Lottery is Ownable {
         //reset the ticket bag with Array() constructor 
         delete TICKETBAG;
     }
-
+    function withdrawTokens() external onlyOwner {
+        uint256 tokenSupply = stackAddress.balanceOf(address(this));
+        stackAddress.transferFrom(address(this), msg.sender, tokenSupply);
+    }
 }
