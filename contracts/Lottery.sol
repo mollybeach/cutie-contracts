@@ -47,7 +47,7 @@ contract Lottery is Ownable {
    /* function checkStarted () public view returns (bool) {
         return LOTTO_LIVE;
     }*/
-    function getNum() public view returns (uint256) {
+    function getMax() public view returns (uint256) {
         return MAX_TICKETS;
     }
    /* 
