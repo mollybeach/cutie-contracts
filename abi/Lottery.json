@@ -1,0 +1,11 @@
+[
+  "event DrawRaffle(address winner, uint256 prize)",
+  "function PRIZE() view returns (uint256)",
+  "function TICKETPOOL(uint256) view returns (address)",
+  "function contestants() view returns (address)",
+  "function createRaffle(address[] _contestants) payable returns (address[])",
+  "function drawRaffle(address[] _ticketpool) returns (address)",
+  "function givePrize(address[] _contestants) payable",
+  "function newPlayer(address _player) payable returns (address[])",
+  "function purchasedTicketsCount(address _player) view returns (uint256)"
+]
