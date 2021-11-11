@@ -15,7 +15,7 @@
   "function draw() returns (address)",
   "function endLotto() returns (address)",
   "function getMax() view returns (uint256)",
-  "function getNumber() view returns (uint256)",
+  "function getPrice() view returns (uint256)",
   "function number() view returns (uint256)",
   "function owner() view returns (address)",
   "function renounceOwnership()",

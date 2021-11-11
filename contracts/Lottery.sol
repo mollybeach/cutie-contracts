@@ -38,29 +38,20 @@ contract Lottery is Ownable {
         stackAddress = IERC20(_stackAddress);
     }
     function setNumber(uint _num) public {
-            number = _num;
+        number = _num;
     }
-
-    function getNumber() public view returns (uint256) {
-        return number;
-    }
-   function checkNotStarted () public view returns (bool) {
+    function checkNotStarted() public view returns (bool) {
         return LOTTO_LIVE;
     }
     function getMax() public view returns (uint256) {
         return MAX_TICKETS;
     }
-   /* 
-    //functions
-    function checkStarted () public returns (bool) {
-        return LOTTO_LIVE;
-    }
-
-    function getPrice() public returns (uint256) {
+    function getPrice() public view returns (uint256) {
         return PRICE;
-        
     }
-    function getTickets() public returns (uint256) {
+/* 
+    //functions
+    function getTickets() public view returns (uint256) {
         return TICKETS;
     }*/
 

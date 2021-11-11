@@ -18,23 +18,20 @@ describe('LotteryContract Unit Test', function () {
         await lotteryContract.callStatic.setNumber(0);
     });
 
-    it('Initial value is set to 0', async function () {
-        expect((await lotteryContract.callStatic.getNumber()).toString()).to.equal('0');
+    it('Lottery has not started ', async function () {
+        expect((await lotteryContract.callStatic.checkNotStarted()).toString()).to.equal('false');
+    });
+    it('Price of entering lottery equals PRICE ', async function () {
+        expect((await lotteryContract.callStatic.getPrice()).toString()).to.equal(PRICE.toString());
     });
     it('Maximum tickets equals MAX_TICKETS ', async function () {
         expect((await lotteryContract.callStatic.getMax()).toString()).to.equal(MAX_TICKETS.toString());
     });
-    it('Lottery has not started ', async function () {
-        expect((await lotteryContract.callStatic.checkNotStarted()).toString()).to.equal('false');
+    it('Lottery has started ', async function () {
+        expect((await lotteryContract.callStatic.startLotto()).toString()).to.equal('true');
     });
-/* it('Lottery is has started'), async function () {
-        const started = await lotteryContract.callStatic.checkStarted();
-        expect(started).to.equal(false);
-    }
-    it('Check that tickets is equal to MAX_TICKETS') , async function () {
-        const tickets = await lotteryContract.callStatic.getTickets();
-        expect(tickets).to.equal(MAX_TICKETS);
-    }
+
+/* 
     it('Check that price is equal to PRICE') , async function () {
         const price = await lotteryContract.callStatic.getPrice(params);
         expect(price).to.equal(PRICE);
