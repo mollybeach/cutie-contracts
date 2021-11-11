@@ -11,6 +11,7 @@
   "function TOKEN_ADDRESS() view returns (address)",
   "function WINNER() view returns (address)",
   "function buyTickets(uint256 _qty, uint256 amount)",
+  "function checkNotStarted() view returns (bool)",
   "function draw() returns (address)",
   "function endLotto() returns (address)",
   "function getMax() view returns (uint256)",

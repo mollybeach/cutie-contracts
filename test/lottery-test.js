@@ -24,10 +24,10 @@ describe('LotteryContract Unit Test', function () {
     it('Maximum tickets equals MAX_TICKETS ', async function () {
         expect((await lotteryContract.callStatic.getMax()).toString()).to.equal(MAX_TICKETS.toString());
     });
-    /*it('Lottery has started'), async function () {
-        expect((await lotteryContract.checkStarted()).to.equal(true));
-    }*/
-/* it('Lottery is not started'), async function () {
+    it('Lottery has not started ', async function () {
+        expect((await lotteryContract.callStatic.checkNotStarted()).toString()).to.equal('false');
+    });
+/* it('Lottery is has started'), async function () {
         const started = await lotteryContract.callStatic.checkStarted();
         expect(started).to.equal(false);
     }
