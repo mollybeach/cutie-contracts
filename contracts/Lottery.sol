@@ -17,8 +17,9 @@ contract Lottery is Ownable {
     uint256 public MAX_TICKETS = 999;
     uint256 public PRICE = 5000000000000000000; //the price is 50 stack                          
     uint256 public TICKETS; 
+    uint256 public number;
     
-        //addresses
+    //addresses
     address public TOKEN_ADDRESS;
     address public WINNER;
     address[] public TICKETBAG;
@@ -36,12 +37,32 @@ contract Lottery is Ownable {
         LOTTO_LIVE = false;
         stackAddress = IERC20(_stackAddress);
     }
+    function setNumber(uint _num) public {
+            number = _num;
+    }
 
+    function getNumber() public view returns (uint256) {
+        return number;
+    }
+   /* 
     //functions
-    function startLotto() public onlyOwner(){
+    function checkStarted () public returns (bool) {
+        return LOTTO_LIVE;
+    }
+
+    function getPrice() public returns (uint256) {
+        return PRICE;
+        
+    }
+    function getTickets() public returns (uint256) {
+        return TICKETS;
+    }*/
+
+    function startLotto() public onlyOwner returns (bool) {
         require(!LOTTO_LIVE);
         LOTTO_LIVE = true;
         TICKETS = 0;
+        return LOTTO_LIVE;
     }
 
     //all stack users can buy tickets
@@ -81,6 +102,7 @@ contract Lottery is Ownable {
         //reset the ticket bag with Array() constructor 
         delete TICKETBAG;
     }
+    //after lottery
     function withdrawTokens() external onlyOwner {
         uint256 tokenSupply = stackAddress.balanceOf(address(this));
         stackAddress.transferFrom(address(this), msg.sender, tokenSupply);

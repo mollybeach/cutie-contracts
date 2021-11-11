@@ -16,7 +16,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test" : "npx hardhat test"
   },
   "lint-staged": {
     "*.{js,ts,sol}": [
@@ -45,6 +46,7 @@
     "solidity-coverage": "^0.7.17"
   },
   "dependencies": {
+    "chai-bn": "^0.3.0",
     "fs": "^0.0.1-security"
   }
 }

@@ -2639,6 +2639,11 @@
     "bignumber.js" "^9.0.1"
     "nofilter" "^1.0.4"
 
+"chai-bn@^0.3.0":
+  "integrity" "sha512-WsDnkmgcXUZVHarkENCA2DhGUs8M6zl6M6XxHrDTIq0DH4ZNDgHN63v7JJnNOQ+LVI/YwSob8eDwqDRW7cp3XQ=="
+  "resolved" "https://registry.npmjs.org/chai-bn/-/chai-bn-0.3.0.tgz"
+  "version" "0.3.0"
+
 "chai@^4.3.4":
   "integrity" "sha512-yS5H68VYOCtN1cjfwumDSuzn/9c+yza4f3reKXlE5rUg7SFcCEy90gJvydNgOYtblyf4Zi6jIWRnXOgErta0KA=="
   "resolved" "https://registry.npmjs.org/chai/-/chai-4.3.4.tgz"

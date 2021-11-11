@@ -1,5 +1,4 @@
 [
-  "event ClaimEvent(address _winner, uint256 _prize)",
   "event DrawEvent(address winner)",
   "event JoinEvent(uint256 _length, uint256 _qty)",
   "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -14,9 +13,13 @@
   "function buyTickets(uint256 _qty, uint256 amount)",
   "function draw() returns (address)",
   "function endLotto() returns (address)",
+  "function getNumber() view returns (uint256)",
+  "function number() view returns (uint256)",
   "function owner() view returns (address)",
   "function renounceOwnership()",
+  "function setNumber(uint256 _num)",
   "function stackAddress() view returns (address)",
-  "function startLotto()",
-  "function transferOwnership(address newOwner)"
+  "function startLotto() returns (bool)",
+  "function transferOwnership(address newOwner)",
+  "function withdrawTokens()"
 ]
