@@ -1,5 +1,5 @@
+const deployments = require('./data/deployments');
 module.exports = [
-    "An0n1-Punks",
-    "AN0N1PUNK",
-    "ipfs://QmQSYiRMmF7KzVCiAMetjuY1b9pJqCgjzeVsJmFSpiwkms/"
+    deployments.berriesToken,
+    deployments.berriesToken
 ]

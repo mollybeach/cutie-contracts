@@ -12,8 +12,8 @@ task('deploy-staked-stacked-toadz').setAction(async function () {
   const EXPIRATION = ethers.BigNumber.from('3600000');
 
   const instance = await ethers.getContractAt(
-    'StackPoolTwo',
-    deployments.stackRewardsMainnet,
+    'StackStaking',
+    deployments.stackFixedMain,
   );
   
   await instance.deployed();
@@ -26,3 +26,26 @@ task('deploy-staked-stacked-toadz').setAction(async function () {
     flag: 'w',
   });
 });
+
+task('set-stack-rate').setAction(async function () {
+  const [sender] = await ethers.getSigners();
+
+  const RATE = ethers.utils
+    .parseUnits('25', 18)
+    .div(ethers.BigNumber.from('6000'));
+
+  const EXPIRATION = ethers.BigNumber.from('372000');
+
+  const instance = await ethers.getContractAt('StackStaking', deployments.stackFixedMain);
+
+  const setRate = await instance.connect(sender).setRate(RATE);
+  await setRate.wait();
+
+  // const setExpiration = await instance.connect(sender).setExpiration(EXPIRATION);
+  // await setExpiration.wait();
+
+  // const unstack = await ethers.getContractAt('UStackStaking', deployments.unstackFixedMain);
+
+  // const setUExpiration = await unstack.connect(sender).setExpiration(EXPIRATION);
+  // await setUExpiration.wait();
+})
