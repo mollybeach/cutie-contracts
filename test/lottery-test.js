@@ -5,6 +5,7 @@ const BN = require('bn.js');
 chai.use(require('chai-bn')(BN));
 
 describe('LotteryContract Unit Test', function () {
+    let accounts, contractOwner, lotteryContract, MAX_TICKETS = 999, PRICE = 5000000000000000000;
     before(async function () {
         accounts = await ethers.getSigners();
         contractOwner = accounts[0];
