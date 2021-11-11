@@ -3,12 +3,8 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./StackedToadz.sol";
 
 /* 
 LOTTERY CONTRACT
@@ -20,7 +16,7 @@ INFO:
     The prize is awarded to a random winner when the tickets are all sold out
 */
 
-contract Lottery  {
+contract Lottery is Ownable {
     
     //events 
     event JoinEvent(uint256 _length, uint _qty);
@@ -29,14 +25,14 @@ contract Lottery  {
 
     //uint256
     uint256 public MAX_TICKETS = 999;
-    uint256 public PRIZE = 10000000000000000; // the prize is 0.1 ether 
-    uint256 public PRICE = 10000000000000000; //the price is 0.001 ether                            
+    uint256 public PRICE = 5000000000000000000; //the price is 50 stack                          
     uint256 public TICKETS; 
     
         //addresses
     address public TOKEN_ADDRESS;
     address public WINNER;
     address[] public TICKETBAG;
+    IERC20 public stackAddress;
 
     //bools
     bool public LOTTO_LIVE;
@@ -45,9 +41,10 @@ contract Lottery  {
     mapping(address => uint256) public AMOUNT_MAPPING;
 
     //constructor
-    constructor() public {
+    constructor(address _stackAddress) public {
         TICKETS = 0;
         LOTTO_LIVE = false;
+        stackAddress = IERC20(_stackAddress);
     }
 
     //functions
@@ -55,18 +52,17 @@ contract Lottery  {
         require(!LOTTO_LIVE);
         LOTTO_LIVE = true;
         TICKETS = 0;
-        buyTickets(AMOUNT_MAPPING[msg.sender]);
     }
 
     //all stack users can buy tickets
-    function buyTickets(uint256 _qty) public payable{
+    function buyTickets(uint256 _qty, uint256 amount) public {
         require(LOTTO_LIVE);
-        require(msg.value >= PRICE * _qty);
+        require(amount >= PRICE * _qty);
         require(_qty > 0);
         require(TICKETBAG.length + _qty <= MAX_TICKETS);
         require(TICKETBAG.length < MAX_TICKETS);
         AMOUNT_MAPPING[msg.sender] = _qty;
-        IERC20(tokenAddress).transfer(address(this), PRICE * _qty);
+        IERC20(stackAddress).transferFrom(_msgSender(), address(this), PRICE * _qty);
         for (uint256 i = 0; i < _qty; i++) {
         TICKETBAG.push(msg.sender);
         }
@@ -77,7 +73,7 @@ contract Lottery  {
     }
 
     //roll for a winner
-    function draw() public onlyOwner view returns(address){
+    function draw() public onlyOwner returns(address){
         require(TICKETBAG.length > 0);
         require(LOTTO_LIVE);
         uint256 randomNum = uint256(block.timestamp) % uint256(TICKETBAG.length-1);
@@ -87,19 +83,13 @@ contract Lottery  {
     }
 
     //pay out the winner and reset the lottery
-    function endLotto() public onlyOwner payable {
+    function endLotto() public onlyOwner returns(address){
         require(LOTTO_LIVE);
-        WINNER = draw(TICKETBAG);
-        payable(WINNER).transfer(PRIZE);
-        emit ClaimEvent(WINNER, PRIZE);
+        WINNER = draw();
         LOTTO_LIVE = false;
+        return WINNER;
         //reset the ticket bag with Array() constructor 
-        TICKETBAG = Array();
-
+        delete TICKETBAG;
     }
 
 }
-
-
-
-    
