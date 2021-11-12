@@ -16,8 +16,7 @@ contract Lottery is Ownable {
 
     //uint256
     uint256 public MAX_TICKETS = 999;
-   // uint256 public PRICE = 5000000000000000000; //the price is 50 stack      
-    uint256 public PRICE = 50; //the price is 50 stack                      
+    uint256 public PRICE = 5000000000000000000; //the price is 50 stack                         
     uint256 public number;
     //addresses
     address public TOKEN_ADDRESS;
