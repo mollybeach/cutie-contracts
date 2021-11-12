@@ -28,19 +28,12 @@ describe('LotteryContract Unit Test', function () {
         expect((await lotteryContract.callStatic.getMax()).toString()).to.equal(MAX_TICKETS.toString());
     });
     it('Lottery has started ', async function () {
-        expect((await lotteryContract.callStatic.startLotto()).toString()).to.equal('true');
+        expect((await lotteryContract.connect(contractOwner).startLotto()).toString()).to.equal('true');
     });
-/*  write it test functions for these solidity functions:
-        function startLotto() public onlyOwner returns (bool)
-        function buyTickets(uint256 _qty, uint256 amount) public
-        function draw() public onlyOwner returns(address)
-        function endLotto() public onlyOwner returns(address)
-        function withdrawTokens() 
-*/
-  /*  it('Bought tickets in the lottery ', async function () {
-        await lotteryContract.callStatic.buyTickets(QUANTITY, AMOUNT);
+    it('Bought tickets in the lottery ', async function () {
+        expect((await lotteryContract.connect(contractOwner).buyTickets(QUANTITY, AMOUNT)).toString()).to.equal('true');
     });
-    it('Draw from lottery', async function () {
+    /* it('Draw from lottery', async function () {
         await lotteryContract.callStatic.draw();
     });
     it('End lottery', async function () {
@@ -48,7 +41,14 @@ describe('LotteryContract Unit Test', function () {
     });
     it('Withdraw tokens', async function () {
         await lotteryContract.callStatic.withdrawTokens();
-    });
-*/
-});
+    });*/
 
+});
+      //run the buyTickets function with the contract.connect(sender).${method_name} syntax
+/*  write it test functions for these solidity functions:
+        function startLotto() public onlyOwner returns (bool)
+        function buyTickets(uint256 _qty, uint256 amount) public
+        function draw() public onlyOwner returns(address)
+        function endLotto() public onlyOwner returns(address)
+        function withdrawTokens() 
+*/

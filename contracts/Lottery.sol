@@ -5,6 +5,9 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "hardhat/console.sol";
+
+
 
 
 contract Lottery is Ownable {
@@ -16,9 +19,7 @@ contract Lottery is Ownable {
     //uint256
     uint256 public MAX_TICKETS = 999;
     uint256 public PRICE = 5000000000000000000; //the price is 50 stack                          
-    uint256 public TICKETS; 
     uint256 public number;
-    
     //addresses
     address public TOKEN_ADDRESS;
     address public WINNER;
@@ -33,7 +34,6 @@ contract Lottery is Ownable {
 
     //constructor
     constructor(address _stackAddress) public {
-        TICKETS = 0;
         LOTTO_LIVE = false;
         stackAddress = IERC20(_stackAddress);
     }
@@ -48,9 +48,6 @@ contract Lottery is Ownable {
     }
     function getPrice() public view returns (uint256) {
         return PRICE;
-    }
-    function getTickets() public view returns (uint256) {
-        return TICKETS;
     }
 
     function startLotto() public onlyOwner returns (bool) {

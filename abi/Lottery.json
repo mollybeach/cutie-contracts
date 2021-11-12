@@ -10,7 +10,7 @@
   "function TICKETS() view returns (uint256)",
   "function TOKEN_ADDRESS() view returns (address)",
   "function WINNER() view returns (address)",
-  "function buyTickets(uint256 _qty, uint256 amount)",
+  "function buyTickets(uint256 _qty, uint256 amount) returns (bool)",
   "function checkNotStarted() view returns (bool)",
   "function draw() returns (address)",
   "function endLotto() returns (address)",
