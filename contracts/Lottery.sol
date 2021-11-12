@@ -50,10 +50,10 @@ contract Lottery is Ownable {
         return PRICE;
     }
 
-    function startLotto() public onlyOwner returns (bool) {
+    function startLotto() public onlyOwner () {
         require(!LOTTO_LIVE);
         LOTTO_LIVE = true;
-        return LOTTO_LIVE;
+
     }
 
     //all stack users can buy tickets

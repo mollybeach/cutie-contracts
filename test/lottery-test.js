@@ -28,7 +28,7 @@ describe('LotteryContract Unit Test', function () {
         expect((await lotteryContract.callStatic.getMax()).toString()).to.equal(MAX_TICKETS.toString());
     });
     it('Lottery has started ', async function () {
-        expect((await lotteryContract.connect(contractOwner).startLotto()).toString()).to.equal('true');
+        await lotteryContract.connect(contractOwner).startLotto();
     });
     /*it('Bought tickets in the lottery ', async function () {
         expect((await lotteryContract.connect(contractOwner).buyTickets(QUANTITY, AMOUNT)).toString()).to.equal('true');
@@ -52,3 +52,5 @@ describe('LotteryContract Unit Test', function () {
         function endLotto() public onlyOwner returns(address)
         function withdrawTokens() 
 */
+
+      //  expect((await lotteryContract.connect(contractOwner).startLotto()).toString()).to.equal('true');
