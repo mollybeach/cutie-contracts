@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "hardhat/console.sol";
 
 
 contract Lottery is Ownable {
@@ -15,10 +16,9 @@ contract Lottery is Ownable {
 
     //uint256
     uint256 public MAX_TICKETS = 999;
-    uint256 public PRICE = 5000000000000000000; //the price is 50 stack                          
-    uint256 public TICKETS; 
-    
-        //addresses
+    uint256 public PRICE = 5000000000000000000; //the price is 50 stack                         
+    uint256 public number;
+    //addresses
     address public TOKEN_ADDRESS;
     address public WINNER;
     address[] public TICKETBAG;
@@ -32,16 +32,26 @@ contract Lottery is Ownable {
 
     //constructor
     constructor(address _stackAddress) public {
-        TICKETS = 0;
         LOTTO_LIVE = false;
         stackAddress = IERC20(_stackAddress);
     }
+    function setNumber(uint _num) public {
+        number = _num;
+    }
+    function checkNotStarted() public view returns (bool) {
+        return LOTTO_LIVE;
+    }
+    function getMax() public view returns (uint256) {
+        return MAX_TICKETS;
+    }
+    function getPrice() public view returns (uint256) {
+        return PRICE;
+    }
 
-    //functions
-    function startLotto() public onlyOwner(){
+    function startLotto() public onlyOwner () {
         require(!LOTTO_LIVE);
         LOTTO_LIVE = true;
-        TICKETS = 0;
+
     }
 
     //all stack users can buy tickets
@@ -50,9 +60,8 @@ contract Lottery is Ownable {
         require(amount >= PRICE * _qty);
         require(_qty > 0);
         require(TICKETBAG.length + _qty <= MAX_TICKETS);
-        require(TICKETBAG.length < MAX_TICKETS);
         AMOUNT_MAPPING[msg.sender] = _qty;
-        IERC20(stackAddress).transferFrom(_msgSender(), address(this), PRICE * _qty);
+        //IERC20(stackAddress).transferFrom(_msgSender(), address(this), PRICE * _qty);
         for (uint256 i = 0; i < _qty; i++) {
         TICKETBAG.push(msg.sender);
         }
@@ -78,9 +87,10 @@ contract Lottery is Ownable {
         WINNER = draw();
         LOTTO_LIVE = false;
         return WINNER;
-        //reset the ticket bag with Array() constructor 
         delete TICKETBAG;
+
     }
+    //after lottery
     function withdrawTokens() external onlyOwner {
         uint256 tokenSupply = stackAddress.balanceOf(address(this));
         stackAddress.transferFrom(address(this), msg.sender, tokenSupply);

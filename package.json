@@ -16,7 +16,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "npx hardhat test"
   },
   "lint-staged": {
     "*.{js,ts,sol}": [
@@ -40,11 +41,13 @@
     "hardhat-spdx-license-identifier": "^2.0.3",
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
+    "mocha": "^9.1.3",
     "prettier": "^2.3.2",
     "prettier-plugin-solidity": "^1.0.0-beta.17",
     "solidity-coverage": "^0.7.17"
   },
   "dependencies": {
+    "chai-bn": "^0.3.0",
     "fs": "^0.0.1-security"
   }
 }
