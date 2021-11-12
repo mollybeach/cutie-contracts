@@ -30,9 +30,9 @@ describe('LotteryContract Unit Test', function () {
     it('Lottery has started ', async function () {
         expect((await lotteryContract.connect(contractOwner).startLotto()).toString()).to.equal('true');
     });
-    it('Bought tickets in the lottery ', async function () {
+    /*it('Bought tickets in the lottery ', async function () {
         expect((await lotteryContract.connect(contractOwner).buyTickets(QUANTITY, AMOUNT)).toString()).to.equal('true');
-    });
+    });*/
     /* it('Draw from lottery', async function () {
         await lotteryContract.callStatic.draw();
     });

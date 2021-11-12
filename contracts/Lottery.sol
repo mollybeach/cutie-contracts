@@ -53,7 +53,6 @@ contract Lottery is Ownable {
     function startLotto() public onlyOwner returns (bool) {
         require(!LOTTO_LIVE);
         LOTTO_LIVE = true;
-        TICKETS = 0;
         return LOTTO_LIVE;
     }
 
