@@ -8,8 +8,6 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "hardhat/console.sol";
 
 
-
-
 contract Lottery is Ownable {
     
     //events 
@@ -18,7 +16,8 @@ contract Lottery is Ownable {
 
     //uint256
     uint256 public MAX_TICKETS = 999;
-    uint256 public PRICE = 5000000000000000000; //the price is 50 stack                          
+   // uint256 public PRICE = 5000000000000000000; //the price is 50 stack      
+    uint256 public PRICE = 50; //the price is 50 stack                      
     uint256 public number;
     //addresses
     address public TOKEN_ADDRESS;
@@ -62,7 +61,6 @@ contract Lottery is Ownable {
         require(amount >= PRICE * _qty);
         require(_qty > 0);
         require(TICKETBAG.length + _qty <= MAX_TICKETS);
-        require(TICKETBAG.length < MAX_TICKETS);
         AMOUNT_MAPPING[msg.sender] = _qty;
         IERC20(stackAddress).transferFrom(_msgSender(), address(this), PRICE * _qty);
         for (uint256 i = 0; i < _qty; i++) {
