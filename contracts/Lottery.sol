@@ -61,7 +61,7 @@ contract Lottery is Ownable {
         require(_qty > 0);
         require(TICKETBAG.length + _qty <= MAX_TICKETS);
         AMOUNT_MAPPING[msg.sender] = _qty;
-        //IERC20(stackAddress).transferFrom(_msgSender(), address(this), PRICE * _qty);
+        IERC20(stackAddress).transferFrom(_msgSender(), address(this), PRICE * _qty);
         for (uint256 i = 0; i < _qty; i++) {
         TICKETBAG.push(msg.sender);
         }
