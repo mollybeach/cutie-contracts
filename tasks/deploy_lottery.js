@@ -39,8 +39,10 @@ task('deploy-lottery').setAction(async function () {
   // run endLotto function 
   const runEndLotto = await instance.connect(deployer).endLotto();
   await runEndLotto.wait();
-
-
+  //run withdrawTokens function
+  /*
+  const runWithdrawTokens = await instance.connect(deployer).withdrawTokens();
+  await runWithdrawTokens.wait();*/
 
   console.log(`Deployed Lottery to: ${instance.address}`);
   deployments.Lottery = instance.address;
