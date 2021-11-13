@@ -46,7 +46,7 @@ contract Lottery is Ownable {
     }
 
     function startLotto() public onlyOwner () {
-        require(!LOTTO_LIVE, "startLotto !LOTTO_LIVE");
+         // require(!LOTTO_LIVE, "startLotto !LOTTO_LIVE");
         LOTTO_LIVE = true;
     }
     function setMaxTickets(uint256 _quantity) public onlyOwner() {
@@ -61,7 +61,7 @@ contract Lottery is Ownable {
     }
     //all stack users can buy tickets
     function buyTickets(uint256 _qty, uint256 _balance) public {
-        require(LOTTO_LIVE, LOTTO_LIVE);
+        require(LOTTO_LIVE, "Lottery has not started yet");   
         require(_balance >= PRICE * _qty, "_balance >= PRICE * _qty " );
         require(_qty > 0, "_qty > 0 " );
         require(TICKETBAG.length + _qty <= MAX_TICKETS, "TICKETBAG.length + _qty <= MAX_TICKETS");

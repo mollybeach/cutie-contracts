@@ -6,13 +6,14 @@ const deployments = require('../data/deployments');
 task('deploy-lottery').setAction(async function () {
   const [deployer] = await ethers.getSigners();
 
-  const stackAddress = deployments.DefaultErc20;
+ const stackAddress = deployments.DefaultErc20;
   const erc20 = await ethers.getContractAt('DefaultErc20', deployments.DefaultErc20);
   const factory = await ethers.getContractFactory('Lottery', deployer);
   //before deploy : 
   //const instance = await factory.deploy(stackAddress);
   //after deploy :
-  const instance = await ethers.getContractAt('Lottery',deployments.Lottery)
+  const instance = await ethers.getContractAt('Lottery',deployments.Lottery);
+
   const MAX_TICKETS = ethers.BigNumber.from(1);
   const PRICE = ethers.utils.parseUnits("50",18);
   const ALLOWED = ethers.utils.parseUnits("100000000000000",18);
@@ -28,17 +29,18 @@ task('deploy-lottery').setAction(async function () {
   const runCheckStarted = await instance.callStatic.checkStarted();
  console.log(runCheckStarted.toString());
 //run buyTickets function 
- 
+
   for (i = 0; i < 1000; i++) {
     const purchase = await instance.connect(deployer).buyTickets(MAX_TICKETS, PRICE);
     await purchase.wait();
   }
   console.log(`Deployed Lottery to: ${instance.address}`);
-  deployments.lottery = instance.address;
+  deployments.Lottery = instance.address;
 
   const json = JSON.stringify(deployments, null, 2);
   fs.writeFileSync(`${__dirname}/../data/deployments.json`, `${json}\n`, {
     flag: 'w',
   });
+  console.log(json);
 });
 //yarn run hardhat deploy-lottery --network localhost
