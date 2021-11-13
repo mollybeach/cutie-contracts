@@ -30,10 +30,10 @@ task('deploy-lottery').setAction(async function () {
  console.log(runCheckStarted.toString());
 //run buyTickets function 
 
-  for (i = 0; i < 1000; i++) {
+ // for (i = 0; i < 1000; i++) {
     const purchase = await instance.connect(deployer).buyTickets(MAX_TICKETS, PRICE);
     await purchase.wait();
-  }
+  //}
   console.log(`Deployed Lottery to: ${instance.address}`);
   deployments.Lottery = instance.address;
 
