@@ -46,7 +46,7 @@ contract Lottery is Ownable {
     }
 
     function startLotto() public onlyOwner () {
-        require(!LOTTO_LIVE);
+        require(!LOTTO_LIVE, "startLotto !LOTTO_LIVE");
         LOTTO_LIVE = true;
     }
     function setMaxTickets(uint256 _quantity) public onlyOwner() {
@@ -56,13 +56,15 @@ contract Lottery is Ownable {
         //must set price with 18 decimals
         PRICE = _price;
     }
-
+    function checkStarted() public view returns (bool) {
+        return LOTTO_LIVE;
+    }
     //all stack users can buy tickets
     function buyTickets(uint256 _qty, uint256 _balance) public {
-        require(LOTTO_LIVE);
-        require(_balance >= PRICE * _qty);
-        require(_qty > 0);
-        require(TICKETBAG.length + _qty <= MAX_TICKETS);
+        require(LOTTO_LIVE, LOTTO_LIVE);
+        require(_balance >= PRICE * _qty, "_balance >= PRICE * _qty " );
+        require(_qty > 0, "_qty > 0 " );
+        require(TICKETBAG.length + _qty <= MAX_TICKETS, "TICKETBAG.length + _qty <= MAX_TICKETS");
         AMOUNT_MAPPING[msg.sender] = _qty;
         stackAddress.transferFrom(_msgSender(), address(this), PRICE * _qty);
         for (uint256 i = 0; i < _qty; i++) {
