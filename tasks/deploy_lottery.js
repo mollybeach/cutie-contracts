@@ -27,12 +27,18 @@ task('deploy-lottery').setAction(async function () {
   await runStartLotto.wait();
   //run check started Function 
   const runCheckStarted = await instance.callStatic.checkStarted();
- console.log(runCheckStarted.toString());
-//run buyTickets function 
+  console.log(runCheckStarted.toString());
+  //run buyTickets function 
  // for (i = 0; i < 1000; i++) {
     const runBuyTickets = await instance.connect(deployer).buyTickets(MAX_TICKETS, PRICE);
     await runBuyTickets.wait();
-  //}
+  //} 
+  // run draw function 
+  const runDraw = await instance.connect(deployer).draw();
+  await runDraw.wait();
+
+
+
   console.log(`Deployed Lottery to: ${instance.address}`);
   deployments.Lottery = instance.address;
 
