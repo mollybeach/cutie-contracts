@@ -29,7 +29,6 @@ describe('LotteryContract Unit Test', function () {
     });
 
     beforeEach(async function () {
-        await lotteryContract.callStatic.setNumber(0);
         let mint = await defaultErc20.connect(contractOwner).mint(contractOwner, ethers.utils.parseUnits("10000000000", 18));
         await mint.wait();
     });

@@ -35,9 +35,6 @@ contract Lottery is Ownable {
         LOTTO_LIVE = false;
         stackAddress = IERC20(_stackAddress);
     }
-    function setNumber(uint _num) public {
-        number = _num;
-    }
     function checkNotStarted() public view returns (bool) {
         return LOTTO_LIVE;
     }

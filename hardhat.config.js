@@ -10,7 +10,7 @@ require('hardhat-spdx-license-identifier');
 require('solidity-coverage');
 require("@nomiclabs/hardhat-waffle");
 
-require("./tasks/deploy_stacked_toadz");
+/*require("./tasks/deploy_stacked_toadz");
 require("./tasks/deploy_stacker");
 require("./tasks/deploy_staked_toadz");
 require("./tasks/deploy_staked_stacked_toads");
@@ -33,8 +33,7 @@ require("./tasks/test_reclaim");
 require("./tasks/deploy_berry_staking");
 require("./tasks/deploy_berries_rewards");
 require("./tasks/deploy_berries_single");
-require("./tasks/set_stacked_staked_rewards");
-require("./tasks/deploy_lottery");
+require("./tasks/set_stacked_staked_rewards");*/
 require("./tasks/deploy_default_erc20");
 require("./tasks/deploy_lottery");
 
