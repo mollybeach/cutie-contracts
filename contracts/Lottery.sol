@@ -52,8 +52,8 @@ contract Lottery is Ownable {
         require(!LOTTO_LIVE);
         LOTTO_LIVE = true;
     }
-    function setMaxTickets(uint256 amount) public onlyOwner() {
-        MAX_TICKETS = amount;
+    function setMaxTickets(uint256 _quantity) public onlyOwner() {
+        MAX_TICKETS = _quantity;
     }
     function setPrice(uint256 _price) public onlyOwner() {
         //must set price with 18 decimals
@@ -61,9 +61,9 @@ contract Lottery is Ownable {
     }
 
     //all stack users can buy tickets
-    function buyTickets(uint256 _qty, uint256 amount) public {
+    function buyTickets(uint256 _qty, uint256 _balance) public {
         require(LOTTO_LIVE);
-        require(amount >= PRICE * _qty);
+        require(_balance >= PRICE * _qty);
         require(_qty > 0);
         require(TICKETBAG.length + _qty <= MAX_TICKETS);
         AMOUNT_MAPPING[msg.sender] = _qty;
