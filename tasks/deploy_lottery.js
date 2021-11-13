@@ -36,6 +36,9 @@ task('deploy-lottery').setAction(async function () {
   // run draw function 
   const runDraw = await instance.connect(deployer).draw();
   await runDraw.wait();
+  // run endLotto function 
+  const runEndLotto = await instance.connect(deployer).endLotto();
+  await runEndLotto.wait();
 
 
 
