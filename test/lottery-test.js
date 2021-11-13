@@ -15,7 +15,8 @@ const deployments = require('../data/deployments');
 */
 
 describe('LotteryContract Unit Test', function () {
-    let accounts, contractOwner, lotteryContract, MAX_TICKETS = 999, QUANTITY = 1, AMOUNT = 60, PRICE = '5000000000000000000';
+  
+    let accounts, contractOwner, defaultErc20, lotteryContract, MAX_TICKETS = 999, QUANTITY = 1, AMOUNT = 60, PRICE = 5000000000000000000;
     before(async function () {
         accounts = await ethers.getSigners();
         contractOwner = accounts[0];
@@ -29,6 +30,8 @@ describe('LotteryContract Unit Test', function () {
 
     beforeEach(async function () {
         await lotteryContract.callStatic.setNumber(0);
+        let mint = await defaultErc20.connect(contractOwner).mint(contractOwner, ethers.utils.parseUnits("10000000000", 18));
+        await mint.wait();
     });
 
     it('Lottery has not started ', async function () {
