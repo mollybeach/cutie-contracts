@@ -51,7 +51,13 @@ contract Lottery is Ownable {
     function startLotto() public onlyOwner () {
         require(!LOTTO_LIVE);
         LOTTO_LIVE = true;
-
+    }
+    function setMaxTickets(uint256 amount) public onlyOwner() {
+        MAX_TICKETS = amount;
+    }
+    function setPrice(uint256 _price) public onlyOwner() {
+        //must set price with 18 decimals
+        PRICE = _price;
     }
 
     //all stack users can buy tickets
