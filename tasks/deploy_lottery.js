@@ -9,9 +9,10 @@ task('deploy-lottery').setAction(async function () {
   const stackAddress = deployments.DefaultErc20;
   const erc20 = await ethers.getContractAt('DefaultErc20', deployments.DefaultErc20);
   const factory = await ethers.getContractFactory('Lottery', deployer);
-  const instance = await factory.deploy(
-      stackAddress
-  );
+  //before deploy : 
+  //const instance = await factory.deploy(stackAddress);
+  //after deploy :
+  const instance = await ethers.getContractAt('Lottery',deployments.Lottery)
   const MAX_TICKETS = ethers.BigNumber.from(1);
   const PRICE = ethers.utils.parseUnits("50",18);
   const ALLOWED = ethers.utils.parseUnits("100000000000000",18);
