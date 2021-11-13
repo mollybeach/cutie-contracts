@@ -15,7 +15,7 @@ const deployments = require('../data/deployments');
 */
 
 describe('LotteryContract Unit Test', function () {
-    let accounts, contractOwner, lotteryContract, MAX_TICKETS = 999, QUANTITY = 1, AMOUNT = 60;
+    let accounts, contractOwner, lotteryContract, MAX_TICKETS = 999, QUANTITY = 1, AMOUNT = 60, PRICE = '5000000000000000000';
     before(async function () {
         accounts = await ethers.getSigners();
         contractOwner = accounts[0];
