@@ -2,7 +2,9 @@ const { expect } = require('chai');
 //import way to deal with bigNumber
 var chai = require('chai');
 const BN = require('bn.js');
+const { ethers } = require('ethers');
 chai.use(require('chai-bn')(BN));
+const deployments = require('../data/deployments');
 
 /*  write it test functions for these solidity functions:
         function startLotto() public onlyOwner returns (bool)
@@ -17,8 +19,11 @@ describe('LotteryContract Unit Test', function () {
     before(async function () {
         accounts = await ethers.getSigners();
         contractOwner = accounts[0];
+        let defaultErc20 = await ethers.getContractFactory('DefaultErc20', contractOwner);
+        defaultErc20 = await defaultErc20.deploy();
+        await defaultErc20.deployed();
         let LotteryContract = await ethers.getContractFactory('Lottery', contractOwner);
-        lotteryContract = await LotteryContract.deploy(contractOwner.address);
+        lotteryContract = await LotteryContract.deploy(deployments.DefaultErc20);
         await lotteryContract.deployed();
     });
 
