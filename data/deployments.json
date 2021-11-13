@@ -32,5 +32,7 @@
   "berriesStakingMainnet": "0xF9711eEDA96E94ea24D73D100D0C6F2eF6063017",
   "berriesUniV2": "0xd7708e11D465E8F7B3fbfB4526dfECf078c85685",
   "berryRewardsMainnet": "0xd17d7368937E5C5cfA82E86a2F5e1A43FF5e243a",
-  "berrySingleStakingMainnet": "0xed322999e937c504261C2AA5E560E018dEaBE1FE"
+  "berrySingleStakingMainnet": "0xed322999e937c504261C2AA5E560E018dEaBE1FE",
+  "DefaultErc20": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "lottery": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 }
