@@ -58,18 +58,17 @@ task('deploy-zombie-toadz').setAction(async function () {
     const changeBatchSize = await instance.connect(deployer).changeBatchSize(10);
     await changeBatchSize.wait();
     successStatement('changeBatchSize');
-
-    //run tokenURI() view function
 /*
-    const tokenURI = await instance.callStatic.tokenURI(5358);
+    //run tokenURI() view function
+    const tokenURI = await instance.callStatic.tokenURI(0);
     console.log(tokenURI);
     successStatement('tokenURI');
+*/
 
     //run setTokenURI() function
-    const setTokenURI = await instance.connect(deployer).setTokenURI(1, BASE_URI + '1');
+    const setTokenURI = await instance.connect(deployer).setTokenURI(1, BASE_URI);
     await setTokenURI.wait();
     successStatement('setTokenURI');
-    */
 
     //run setStart() function
     const setStart = await instance.connect(deployer).setStart(true);
@@ -80,14 +79,14 @@ task('deploy-zombie-toadz').setAction(async function () {
     const devMint = await instance.connect(deployer).devMint(1);
     await devMint.wait();
     successStatement('devMint');
-
+/*
 
     //run mintToad() function
     const mintToad = await instance.connect(deployer).mintToad(2);
     await mintToad.wait();
     successStatement('mintToad');
     
-
+*/
 });
 
 //yarn run hardhat deploy-zombie-toadz --network localhost
