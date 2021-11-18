@@ -63,7 +63,7 @@ task('deploy-zombie-toadz').setAction(async function () {
 
     //run tokenURI() view function
 /*
-    const tokenURI = await instance.callStatic.tokenURI(1);
+    const tokenURI = await instance.callStatic.tokenURI(5358);
     console.log(tokenURI);
     successStatement('tokenURI');
 
@@ -75,13 +75,13 @@ task('deploy-zombie-toadz').setAction(async function () {
     //run setStart() function
     const setStart = await instance.connect(deployer).setStart(true);
     await setStart.wait();
-    successStatement('setStart');
+    successStatement('setStart');*/
 
     //run devMint() function
     const devMint = await instance.connect(deployer).devMint(1);
     await devMint.wait();
     successStatement('devMint');
-
+/*
     //run mintToad() function
     const mintToad = await instance.connect(deployer).mintToad(1);
     await mintToad.wait();
