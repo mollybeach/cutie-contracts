@@ -60,8 +60,9 @@ task('deploy-zombie-toadz').setAction(async function () {
     const changeBatchSize = await instance.connect(deployer).changeBatchSize(10);
     await changeBatchSize.wait();
     successStatement('changeBatchSize');
-/*
+
     //run tokenURI() view function
+/*
     const tokenURI = await instance.callStatic.tokenURI(1);
     console.log(tokenURI);
     successStatement('tokenURI');
