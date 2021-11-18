@@ -14,7 +14,7 @@ const deployments = require('../data/deployments');
         let runFunction = await instance.callStatic.functionName() for everything else
         await runFunction.wait() for everything else
         let runViewFunction = await instance.connect(deployer).functionName() for public view functions
-        console.log(runViewFunction) for everything else
+        console.log(runViewFunction) for public view functions
 */
 task('deploy-zombie-toadz').setAction(async function () {
     const NAME = 'ZombieToadz', SYMBOL = 'BRAINZ', BASE_URI = 'ipfs://QmWf3ywafrdzWx6QjUJiRe6NqMkb28rfPj3oBBkokTL199/';
