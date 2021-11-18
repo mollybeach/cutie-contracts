@@ -13,6 +13,13 @@ const deployments = require('../data/deployments');
         function setStart(bool _start) public onlyOwner
         function devMint(uint256 _times) public onlyOwner
         function mintToad(uint256 _times) payable public
+
+        let runFunction = await instance.callStatic.functionName() for everything else
+        await runFunction.wait() for everything else
+
+        let runViewFunction = await instance.connect(deployer).functionName() for public view functions
+        console.log(runViewFunction) for everything else
+
 */
 task('deploy-zombie-toadz').setAction(async function () {
     const NAME = 'ZombieToadz', SYMBOL = 'BRAINZ', BASE_URI = 'ipfs://QmWf3ywafrdzWx6QjUJiRe6NqMkb28rfPj3oBBkokTL199/';
@@ -36,10 +43,50 @@ task('deploy-zombie-toadz').setAction(async function () {
     fs.writeFileSync(`${__dirname}/../data/deployments.json`, `${json}\n`, {
         flag: 'w',
     });
-    let successStatement = (functionName) => {console.log('The' + functionName + 'function ran successfully without errors.');}
+    console.log('\n*******Checking functions*********\n');
+    let successStatement = (functionName) => { console.log('\n Success: The ' + functionName + ' function ran without errors.');}
+    
+    //run totalSupply() view function
     const totalSupply = await instance.callStatic.totalSupply();
     console.log(totalSupply);
     successStatement('totalSupply');
+
+    //run changePrice() function
+    const changePrice = await instance.connect(deployer).changePrice(100);
+    await changePrice.wait();
+    successStatement('changePrice');
+
+    //run changeBatchSize() function
+    const changeBatchSize = await instance.connect(deployer).changeBatchSize(10);
+    await changeBatchSize.wait();
+    successStatement('changeBatchSize');
+/*
+    //run tokenURI() view function
+    const tokenURI = await instance.callStatic.tokenURI(1);
+    console.log(tokenURI);
+    successStatement('tokenURI');
+
+    //run setTokenURI() function
+    const setTokenURI = await instance.connect(deployer).setTokenURI(1, BASE_URI + '1');
+    await setTokenURI.wait();
+    successStatement('setTokenURI');
+
+    //run setStart() function
+    const setStart = await instance.connect(deployer).setStart(true);
+    await setStart.wait();
+    successStatement('setStart');
+
+    //run devMint() function
+    const devMint = await instance.connect(deployer).devMint(1);
+    await devMint.wait();
+    successStatement('devMint');
+
+    //run mintToad() function
+    const mintToad = await instance.connect(deployer).mintToad(1);
+    await mintToad.wait();
+    successStatement('mintToad');
+    */
+
 });
 
 //yarn run hardhat deploy-zombie-toadz --network localhost
