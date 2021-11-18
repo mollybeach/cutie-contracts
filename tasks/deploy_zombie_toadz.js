@@ -1,9 +1,7 @@
 const fs = require('fs');
 const deployments = require('../data/deployments');
 
-
-
-/*  write it task  functions for these solidity functions:
+/*  write it task functions for these solidity functions:
         constructor(string memory name_, string memory symbol_, string memory baseURI_) ERC721(name_, symbol_); 
         function totalSupply() public view virtual returns (uint256)
         function changePrice(uint256 _newPrice) public onlyOwner
@@ -83,12 +81,12 @@ task('deploy-zombie-toadz').setAction(async function () {
     await devMint.wait();
     successStatement('devMint');
 
-/*
+
     //run mintToad() function
-    const mintToad = await instance.connect(deployer).mintToad(1);
+    const mintToad = await instance.connect(deployer).mintToad(2);
     await mintToad.wait();
     successStatement('mintToad');
-    */
+    
 
 });
 
