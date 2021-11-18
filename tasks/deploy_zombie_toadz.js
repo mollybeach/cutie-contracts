@@ -19,20 +19,20 @@ task('deploy-zombie-toadz').setAction(async function () {
     const [deployer] = await ethers.getSigners();
     console.log(deployer);
     const factory = await ethers.getContractFactory('ZombieToadz', deployer);
-    //before deploy :
-    const instance = await factory.deploy(
+    const constructor = await factory.deploy(
         NAME,
         SYMBOL,
         NAME
 
     );
+    //before deploy :
+    const instance = constructor;
     //after deploy : 
-   // const instance = constructor;
-  //const instance = await ethers.getContractAt('ZombieToadz',deployments.ZombieToadz);
+    //const instance = await ethers.getContractAt('ZombieToadz',deployments.ZombieToadz);
     await instance.deployed();
 
-    console.log(`Deployed ZombieZombieToadz to: ${instance.address}`);
-    deployments.zombieToadzMainnet = instance.address;
+    console.log(`Deployed ZombieToadz to: ${instance.address}`);
+    deployments.ZombieToadz = instance.address;
     const json = JSON.stringify(deployments, null, 2);
     fs.writeFileSync(`${__dirname}/../data/deployments.json`, `${json}\n`, {
         flag: 'w',
