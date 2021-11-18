@@ -11,13 +11,10 @@ const deployments = require('../data/deployments');
         function setStart(bool _start) public onlyOwner
         function devMint(uint256 _times) public onlyOwner
         function mintToad(uint256 _times) payable public
-
         let runFunction = await instance.callStatic.functionName() for everything else
         await runFunction.wait() for everything else
-
         let runViewFunction = await instance.connect(deployer).functionName() for public view functions
         console.log(runViewFunction) for everything else
-
 */
 task('deploy-zombie-toadz').setAction(async function () {
     const NAME = 'ZombieToadz', SYMBOL = 'BRAINZ', BASE_URI = 'ipfs://QmWf3ywafrdzWx6QjUJiRe6NqMkb28rfPj3oBBkokTL199/';
@@ -27,8 +24,7 @@ task('deploy-zombie-toadz').setAction(async function () {
     const constructor = await factory.deploy(
         NAME,
         SYMBOL,
-        NAME
-
+        BASE_URI
     );
     //before deploy :
    // const instance = constructor;
@@ -37,11 +33,11 @@ task('deploy-zombie-toadz').setAction(async function () {
     await instance.deployed();
     console.log(`Deployed ZombieToadz to: ${instance.address}`);
     deployments.ZombieToadz = instance.address;
+    
     const json = JSON.stringify(deployments, null, 2);
     fs.writeFileSync(`${__dirname}/../data/deployments.json`, `${json}\n`, {
         flag: 'w',
     });
-    console.log('\n*******Checking functions*********\n');
     let successStatement = (functionName) => { console.log('\n Success: The ' + functionName + ' function ran without errors.');}
     
     //run totalSupply() view function
@@ -64,7 +60,6 @@ task('deploy-zombie-toadz').setAction(async function () {
     console.log(tokenURI);
     successStatement('tokenURI');
 */
-
     //run setTokenURI() function
     const setTokenURI = await instance.connect(deployer).setTokenURI(1, BASE_URI);
     await setTokenURI.wait();
@@ -80,7 +75,6 @@ task('deploy-zombie-toadz').setAction(async function () {
     await devMint.wait();
     successStatement('devMint');
 /*
-
     //run mintToad() function
     const mintToad = await instance.connect(deployer).mintToad(2);
     await mintToad.wait();
