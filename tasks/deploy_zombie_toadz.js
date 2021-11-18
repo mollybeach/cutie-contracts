@@ -26,17 +26,20 @@ task('deploy-zombie-toadz').setAction(async function () {
 
     );
     //before deploy :
-    const instance = constructor;
+   // const instance = constructor;
     //after deploy : 
-    //const instance = await ethers.getContractAt('ZombieToadz',deployments.ZombieToadz);
+    const instance = await ethers.getContractAt('ZombieToadz',deployments.ZombieToadz);
     await instance.deployed();
-
     console.log(`Deployed ZombieToadz to: ${instance.address}`);
     deployments.ZombieToadz = instance.address;
     const json = JSON.stringify(deployments, null, 2);
     fs.writeFileSync(`${__dirname}/../data/deployments.json`, `${json}\n`, {
         flag: 'w',
     });
+    let successStatement = (functionName) => {console.log('The' + functionName + 'function ran successfully without errors.');}
+    const totalSupply = await instance.callStatic.totalSupply();
+    console.log(totalSupply);
+    successStatement('totalSupply');
 });
 
 //yarn run hardhat deploy-zombie-toadz --network localhost
