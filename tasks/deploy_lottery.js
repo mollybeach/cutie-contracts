@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 const deployments = require('../data/deployments');
 //import bigNumber 
@@ -10,9 +9,9 @@ task('deploy-lottery').setAction(async function () {
   const erc20 = await ethers.getContractAt('DefaultErc20', deployments.DefaultErc20);
   const factory = await ethers.getContractFactory('Lottery', deployer);
   //before deploy : 
-  //const instance = await factory.deploy(stackAddress);
+  const instance = await factory.deploy(stackAddress);
   //after deploy :
-  const instance = await ethers.getContractAt('Lottery',deployments.Lottery);
+  //const instance = await ethers.getContractAt('Lottery',deployments.Lottery);
 
   const MAX_TICKETS = ethers.BigNumber.from(1);
   const PRICE = ethers.utils.parseUnits("50",18);
@@ -59,3 +58,4 @@ task('deploy-lottery').setAction(async function () {
   console.log(json);
 });
 //yarn run hardhat deploy-lottery --network localhost
+

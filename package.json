@@ -17,7 +17,8 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "test": "npx hardhat test"
+    "test": "npx hardhat test",
+    "lotto" : "yarn run hardhat deploy-lottery --network localhost"
   },
   "lint-staged": {
     "*.{js,ts,sol}": [
