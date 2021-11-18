@@ -71,17 +71,18 @@ task('deploy-zombie-toadz').setAction(async function () {
     const setTokenURI = await instance.connect(deployer).setTokenURI(1, BASE_URI + '1');
     await setTokenURI.wait();
     successStatement('setTokenURI');
+    */
 
     //run setStart() function
     const setStart = await instance.connect(deployer).setStart(true);
     await setStart.wait();
-    successStatement('setStart');*/
+    successStatement('setStart');
 
     //run devMint() function
     const devMint = await instance.connect(deployer).devMint(1);
     await devMint.wait();
     successStatement('devMint');
-    
+
 /*
     //run mintToad() function
     const mintToad = await instance.connect(deployer).mintToad(1);
