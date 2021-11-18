@@ -81,6 +81,7 @@ task('deploy-zombie-toadz').setAction(async function () {
     const devMint = await instance.connect(deployer).devMint(1);
     await devMint.wait();
     successStatement('devMint');
+    
 /*
     //run mintToad() function
     const mintToad = await instance.connect(deployer).mintToad(1);
