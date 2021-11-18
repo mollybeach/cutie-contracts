@@ -13,9 +13,8 @@ const deployments = require('../data/deployments');
         function endLotto() public onlyOwner returns(address)
         function withdrawTokens() 
 */
-
+/*
 describe('LotteryContract Unit Test', function () {
-  
     let accounts, contractOwner, defaultErc20, lotteryContract, MAX_TICKETS = 999, QUANTITY = 1, AMOUNT = 60, PRICE = 5000000000000000000;
     before(async function () {
         accounts = await ethers.getSigners();
@@ -61,7 +60,7 @@ describe('LotteryContract Unit Test', function () {
 
 
 });
-
+*/
 `
 Issues :
 ATTEMPT    :        -RUN THE BUY TICKET FUNCTION WITH THE CONTRACT AS IS-
