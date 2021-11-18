@@ -5,7 +5,7 @@ const deployments = require('../data/deployments');
 task('deploy-lottery').setAction(async function () {
   const [deployer] = await ethers.getSigners();
 
- const stackAddress = deployments.DefaultErc20;
+  const stackAddress = deployments.DefaultErc20;
   const erc20 = await ethers.getContractAt('DefaultErc20', deployments.DefaultErc20);
   const factory = await ethers.getContractFactory('Lottery', deployer);
   //before deploy : 

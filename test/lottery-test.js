@@ -2,7 +2,7 @@ const { expect } = require('chai');
 //import way to deal with bigNumber
 var chai = require('chai');
 const BN = require('bn.js');
-const { ethers } = require('ethers');
+const { ethers } = require("hardhat"); 
 chai.use(require('chai-bn')(BN));
 const deployments = require('../data/deployments');
 
