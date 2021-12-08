@@ -27,9 +27,9 @@ task('deploy-zombie-toadz').setAction(async function () {
         BASE_URI
     );
     //before deploy :
-   // const instance = constructor;
+  const instance = constructor;
     //after deploy : 
-    const instance = await ethers.getContractAt('ZombieToadz',deployments.ZombieToadz);
+   // const instance = await ethers.getContractAt('ZombieToadz',deployments.ZombieToadz);
     await instance.deployed();
     console.log(`Deployed ZombieToadz to: ${instance.address}`);
     deployments.ZombieToadz = instance.address;
@@ -74,13 +74,11 @@ task('deploy-zombie-toadz').setAction(async function () {
     const devMint = await instance.connect(deployer).devMint(1);
     await devMint.wait();
     successStatement('devMint');
-/*
     //run mintToad() function
     const mintToad = await instance.connect(deployer).mintToad(2);
     await mintToad.wait();
     successStatement('mintToad');
-    
-*/
+
 });
 
 //yarn run hardhat deploy-zombie-toadz --network localhost
