@@ -30,6 +30,7 @@ require("./tasks/mint_stack");
 require("./tasks/set_fixed_fish");
 require("./tasks/deploy_anoni");
 require("./tasks/test_reclaim");
+require("./tasks/deploy_zombie_toadz");
 require("./tasks/deploy_berry_staking");
 require("./tasks/deploy_berries_rewards");
 require("./tasks/deploy_berries_single");
@@ -37,7 +38,11 @@ require("./tasks/set_stacked_staked_rewards");
 require("./tasks/deploy_default_erc20");
 require("./tasks/deploy_lottery");
 */
-require("./tasks/deploy_zombie_toadz");
+require("./tasks/deploy_lottery");
+require("./tasks/deploy_default_erc20");
+require("./tasks/deploy_draca");
+
+
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
