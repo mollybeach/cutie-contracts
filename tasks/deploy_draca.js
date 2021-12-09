@@ -24,7 +24,7 @@ task('deploy-draca').setAction(async function () {
   const TIMES = 1;
   const ALLOWED = ethers.utils.parseUnits("100000000000000",18);
   await instance.deployed();
-
+/*
   //call the approval function from Erc20 openZeppelin contract
   const approval = await erc20.connect(deployer).approve(instance.address, ALLOWED);
   await approval.wait();
@@ -58,6 +58,7 @@ task('deploy-draca').setAction(async function () {
     flag: 'w',
   });
   console.log(json);
+  */
 });
 //yarn run hardhat deploy-draca --network localhost
 
