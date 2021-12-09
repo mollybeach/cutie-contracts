@@ -97,6 +97,7 @@ contract Draca is ERC721Enumerable, Ownable {
             for(uint256 i=0; i< _times; i++){
             _mint(_msgSender(), 1 + freeTotal++);
             }
+        //allows public to mint 3704 tokens of Draca for 0.2Eth
         } else {
             require(publicTotal + _times <= publicSupply, "max supply reached!");
             require(msg.value == _times * PRICE, "insufficient funds");
