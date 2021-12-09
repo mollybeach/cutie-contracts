@@ -59,8 +59,9 @@ contract Draca is ERC721Enumerable, Ownable {
         return bytes(baseURI).length > 0
             ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : '.json';
     }
-    function setStart(bool _start) public onlyOwner {
+    function setStart(bool _start) public onlyOwner returns (bool) {
         started = _start;
+        return started;
     }
 
     function tokensOfOwner(address owner)

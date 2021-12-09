@@ -27,7 +27,7 @@ task('deploy-zombie-toadz').setAction(async function () {
         BASE_URI
     );
     //before deploy :
-  const instance = constructor;
+    const instance = constructor;
     //after deploy : 
    // const instance = await ethers.getContractAt('ZombieToadz',deployments.ZombieToadz);
     await instance.deployed();
