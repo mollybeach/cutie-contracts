@@ -83,7 +83,7 @@ contract Draca is ERC721Enumerable, Ownable {
         require(totalFreeMinted + _times <= totalFreeMinted , "max supply reached!");
         emit MintDev(_msgSender(), totalPublicMinted+1, _times);
         for(uint256 i=0; i< _times; i++){
-            _mint(_msgSender(), 1 + totalPublicMinted++);
+            _mint(_msgSender(), 1 + totalDevMinted++);
     }
     }
 
@@ -94,7 +94,7 @@ contract Draca is ERC721Enumerable, Ownable {
         require(totalFreeMinted + _times <= totalFreeMinted , "max supply reached!");
         emit MintFree(_msgSender(), totalPublicMinted+1, _times);
         for(uint256 i=0; i< _times; i++){
-            _mint(_msgSender(), 1 + totalPublicMinted++);
+            _mint(_msgSender(), 1 + totalFreeMinted++);
         }
     } 
 
