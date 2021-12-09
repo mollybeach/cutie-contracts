@@ -3,10 +3,8 @@ const deployments = require('../data/deployments');
 /*  write it task functions for these solidity functions:
 
   function setStart(bool _start) public onlyOwner returns (bool)
-  function tokensOfOwner(address owner)
-  function mintDev(uint256 _times, uint256 _tokenId) payable public 
-  function mintFree(uint256 _times, uint256 _tokenId) payable public 
-  function mintPublic(uint256 _times) payable public
+  function walletOfOwner(address _owner)w
+  function mint(uint256 _times) payable public
 
 */
 task('deploy-draca').setAction(async function () {
@@ -43,26 +41,15 @@ task('deploy-draca').setAction(async function () {
   const setStart = await instance.callStatic.setStart(true);
   console.log(setStart.toString());
 
-  //run TokensOfOwner Function after deploy
-  /*const runTokensOfOwner = await instance.connect(deployer).tokensOfOwner(instance.address);
-  await runTokensOfOwner.wait();
-  tokensOfOwner*/
-
-  //before deploy
-  const runTokensOfOwner = await instance.callStatic.tokensOfOwner(instance.address);
-  console.log(runTokensOfOwner.toString());
+  //run  wallet of owner function
+  const walletOfOwner= await instance.callStatic.walletOfOwner(instance.address);
+  console.log(walletOfOwner.toString());
 /*
-  //run MintFree Function
-  const runMintFree = await instance.connect(deployer).mintFree(TOKEN_ID, TIMES);
-  await runMintFree.wait();
 
-  //run MintDev Function
-  const runMintDev = await instance.connect(deployer).mintFree( TIMES);
-  await runMintDev.wait();
+ //run MintFunction
+  const runMint = await instance.connect(deployer).mint(TIMES);
+  await runMintc.wait();
 
-  //run MintPublic Function
-  const runMintPublic = await instance.connect(deployer).mintFree(TIMES);
-  await runMintPublic.wait();
 
   console.log(`Deployed Draca to: ${instance.address}`);
   deployments.Draca = instance.address;

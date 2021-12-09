@@ -16,20 +16,19 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Draca is ERC721Enumerable, Ownable {
     using Strings for uint256;
-    
-    event MintDev(address indexed sender, uint256 startWith, uint256 times);
-    event MintFree(address indexed sender, uint256 startWith, uint256 times);
-    event MintPublic(address indexed sender, uint256 startWith, uint256 times);
+
+    event Mint(address indexed sender, uint256 startWith, uint256 times);
 
     //supply counters 
-    uint256 public totalFreeMinted;
-    uint256 public totalDevMinted;
-    uint256 public totalPublicMinted;
+    uint256 public freeTotal;
+    uint256 public devTotal;
+    uint256 public publicTotal;
+    uint256 public totalMinted;
     
     uint256 public PRICE = 20000000000000000; //0.02 ETH
-    uint256 public freeMint = 996;
-    uint256 public devMint = 300;
-    uint256 public publicMint = 3704;
+    uint256 public freeSupply = 996;
+    uint256 public devSupply = 300;
+    uint256 public publicSupply = 3704;
     IERC20 public stackAddress;
 
     //string
@@ -39,7 +38,11 @@ contract Draca is ERC721Enumerable, Ownable {
     bool private started;
 
     //constructor args 
-    constructor(string memory name_, string memory symbol_,  address _stackAddress) ERC721(name_, symbol_) {
+    constructor(
+        string memory name_, 
+        string memory symbol_,
+        address _stackAddress) 
+        ERC721(name_, symbol_) {
         //baseURI = baseURI_;
         stackAddress = IERC20(_stackAddress);
     }
@@ -64,50 +67,49 @@ contract Draca is ERC721Enumerable, Ownable {
         started = _start;
         return started;
     }
-    //TokensOfOwner
-    function tokensOfOwner(address owner)
+
+    function walletOfOwner(address _owner)
         public
         view
         returns (uint256[] memory)
     {
-        uint256 count = balanceOf(owner);
-        uint256[] memory ids = new uint256[](count);
-        for (uint256 i = 0; i < count; i++) {
-            ids[i] = tokenOfOwnerByIndex(owner, i);
-        }
-        return ids;
+    uint256 ownerTokenCount = balanceOf(_owner);
+    uint256[] memory tokenIds = new uint256[](ownerTokenCount);
+    for (uint256 i; i < ownerTokenCount; i++) {
+        tokenIds[i] = tokenOfOwnerByIndex(_owner, i);
     }
-
-    //allow developer to mint 300 tokens for free
-    function mintDev(uint256 _times) payable public onlyOwner {
-        require(started, "not started");
-        require(totalFreeMinted + _times <= totalFreeMinted , "max supply reached!");
-        emit MintDev(_msgSender(), totalPublicMinted+1, _times);
-        for(uint256 i=0; i< _times; i++){
-            _mint(_msgSender(), 1 + totalDevMinted++);
-    }
-    }
-
-    //allows public to mint 996 draca tokens for free if they are holders of Genesis token
-    function mintFree(uint256 _times, uint256 _tokenId) payable public {
-        require(_exists(_tokenId), "User does not have a Genesis so cannot mint free.");
-        require(started, "not started");
-        require(totalFreeMinted + _times <= totalFreeMinted , "max supply reached!");
-        emit MintFree(_msgSender(), totalPublicMinted+1, _times);
-        for(uint256 i=0; i< _times; i++){
-            _mint(_msgSender(), 1 + totalFreeMinted++);
-        }
+        return tokenIds;
     } 
 
-    //allows the public to mint up to 3704 Draca tokens for 0.02 ETH
-    function mintPublic(uint256 _times) payable public {
+    // public
+    function mint(uint256 _times) payable public{
+
         require(started, "not started");
-        require(totalPublicMinted + _times <= totalPublicMinted, "max supply reached!");
-        require(msg.value == _times * PRICE, "value error, please check PRICE.");
-        payable(owner()).transfer(msg.value);
-        emit MintPublic(_msgSender(), totalPublicMinted+1, _times);
-        for(uint256 i=0; i< _times; i++){
-            _mint(_msgSender(), 1 + totalPublicMinted++);
+        require(_times > 0, "need to mint at least 1 NFT");
+        
+         //allow developer to mint 300 tokens for free
+        if(owner() == _msgSender() && devTotal + _times <= devSupply){
+            for(uint256 i=0; i< _times; i++){
+            _mint(_msgSender(), 1 + devTotal++);
+            }
+        //allows public to mint 996 draca tokens for free if they are holders of Genesis token  
+        } else if(balanceOf(_msgSender()) > 0 && walletOfOwner(_msgSender()).length < 1 && freeTotal + _times <= freeSupply ){ // "User has already minted thier one free Draca token");
+            for(uint256 i=0; i< _times; i++){
+            _mint(_msgSender(), 1 + freeTotal++);
+            }
+        } else {
+            require(publicTotal + _times <= publicSupply, "max supply reached!");
+            require(msg.value == _times * PRICE, "insufficient funds");
+            payable(owner()).transfer(msg.value);
+            for(uint256 i=0; i< _times; i++){
+            _mint(_msgSender(), 1 + publicTotal++);
         }
-    }  
+
+        emit Mint(_msgSender(), totalMinted+1, _times);
+        
+        }
+    }
+
+
 }
+
