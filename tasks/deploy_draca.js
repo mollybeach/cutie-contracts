@@ -1,6 +1,7 @@
 const fs = require('fs');
 const deployments = require('../data/deployments');
 /*  write it task functions for these solidity functions:
+
   function setStart(bool _start) public onlyOwner returns (bool)
   function tokensOfOwner(address owner)
   function mintDev(uint256 _times, uint256 _tokenId) payable public 
