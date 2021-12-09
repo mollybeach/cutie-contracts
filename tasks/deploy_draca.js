@@ -43,14 +43,14 @@ task('deploy-draca').setAction(async function () {
   const setStart = await instance.callStatic.setStart(true);
   console.log(setStart.toString());
 
-    //run TokensOfOwner Function after deploy
-    /*const runTokensOfOwner = await instance.connect(deployer).tokensOfOwner(instance.address);
-    await runTokensOfOwner.wait();
-    tokensOfOwner*/
+  //run TokensOfOwner Function after deploy
+  /*const runTokensOfOwner = await instance.connect(deployer).tokensOfOwner(instance.address);
+  await runTokensOfOwner.wait();
+  tokensOfOwner*/
 
   //before deploy
-    const runTokensOfOwner = await instance.callStatic.tokensOfOwner(instance.address);
-    console.log(runTokensOfOwner.toString());
+  const runTokensOfOwner = await instance.callStatic.tokensOfOwner(instance.address);
+  console.log(runTokensOfOwner.toString());
 /*
   //run MintFree Function
   const runMintFree = await instance.connect(deployer).mintFree(TOKEN_ID, TIMES);
