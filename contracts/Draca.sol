@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /*- Total supply: 5000
 
@@ -25,6 +26,7 @@ contract Draca is ERC721Enumerable, Ownable {
     uint256 public freeMint = 996;
     uint256 public devMint = 300;
     uint256 public publicMint = 3704;
+    IERC20 public stackAddress;
 
   //  uint256 public totalCount = 5000;
 
@@ -37,8 +39,9 @@ contract Draca is ERC721Enumerable, Ownable {
     bool private started;
 
     //constructor args 
-    constructor(string memory name_, string memory symbol_, string memory baseURI_) ERC721(name_, symbol_) {
-        baseURI = baseURI_;
+    constructor(string memory name_, string memory symbol_,  address _stackAddress) ERC721(name_, symbol_) {
+        //baseURI = baseURI_;
+        stackAddress = IERC20(_stackAddress);
     }
 
     //basic functions. 
@@ -52,7 +55,7 @@ contract Draca is ERC721Enumerable, Ownable {
     //erc721 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token.");
-        string memory baseURI = _baseURI();
+        //string memory baseURI = _baseURI();
         return bytes(baseURI).length > 0
             ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : '.json';
     }
