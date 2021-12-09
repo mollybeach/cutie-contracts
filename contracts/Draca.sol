@@ -13,8 +13,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 1 Genesis NFT in wallet = 1 free mint (996 Reserved Supply)
 - Dev mint function that allows us to mint for free (300 Reserved Supply)
 - Public mint 0.02 ETH mint price (3704 Supply)
-- Would be good to let free mints and public at the same time (every mint after the allocated free mints per user would be 0.02eth, just like public)
-
+- Would be good to let free mints and public at the same time (every mint after the allocated free mints per user would be 0.02eth, just like public
 */
 
 contract Draca is ERC721Enumerable, Ownable {
@@ -30,12 +29,8 @@ contract Draca is ERC721Enumerable, Ownable {
     uint256 public devMint = 300;
     uint256 public publicMint = 3704;
 
-
   //  uint256 public totalCount = 5000;
     //token Index tracker 
-
-
-    uint256 public maxBatch = 10;
     uint256 public price = 20000000000000000; //0.02 ETH
 
     //string
@@ -60,8 +55,7 @@ contract Draca is ERC721Enumerable, Ownable {
     //erc721 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token.");
-        
-        string memory baseURI = _baseURI();
+       // string memory baseURI = _baseURI();
         return bytes(baseURI).length > 0
             ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : '.json';
     }
@@ -83,10 +77,9 @@ contract Draca is ERC721Enumerable, Ownable {
     }
 
     //write function to check if the sender owns genesis token if it does it gets one free mint of draca
-    function freeMint(uint256 _times, uint256 _tokenId) payable public {
-        require(!_exists(_tokenId), "Genesis token already exists.");
+    function mintFree(uint256 _times, uint256 _tokenId) payable public {
+        require(_exists(_tokenId), "User does not have a Genesis so cannot mint free.");
         require(started, "not started");
-        require(_times > 0 && _times <= maxBatch, "must mint fewer in each batch");
         require(totalFreeMinted + _times <= totalFreeMinted , "max supply reached!");
         emit Mint(_msgSender(), totalPublicMinted+1, _times);
         for(uint256 i=0; i< _times; i++){
@@ -94,19 +87,19 @@ contract Draca is ERC721Enumerable, Ownable {
         }
     }  
      //write function to check if the sender owns genesis token if it does it gets one free mint of draca
-    function devMint(uint256 _times, uint256 _tokenId) payable public {
-        require(!_exists(_tokenId), "Genesis token already exists.");
+    function mintDev(uint256 _times, uint256 _tokenId) payable public {
+        require(_exists(_tokenId),  "User does not have a Genesis so cannot mint free.");
         require(started, "not started");
-        require(_times > 0 && _times <= maxBatch, "must mint fewer in each batch");
         require(totalDevMinted + _times <= totalDevMinted , "max supply reached!");
         emit Mint(_msgSender(), totalPublicMinted+1, _times);
         for(uint256 i=0; i< _times; i++){
             _mint(_msgSender(), 1 + totalPublicMinted++);
         }
     }
-    function publicMint(uint256 _times) payable public {
+
+    //if the sender is the owner of the token it can be minted for fre
+    function mintPublic(uint256 _times) payable public {
         require(started, "not started");
-        require(_times > 0 && _times <= maxBatch, "must mint fewer in each batch");
         require(totalPublicMinted + _times <= totalPublicMinted, "max supply reached!");
         require(msg.value == _times * price, "value error, please check price.");
         payable(owner()).transfer(msg.value);
