@@ -1,6 +1,5 @@
 const fs = require('fs');
 const deployments = require('../data/deployments');
-//import bigNumber 
 /*  write it task functions for these solidity functions:
   function setStart(bool _start) public onlyOwner returns (bool)
   function tokensOfOwner(address owner)
