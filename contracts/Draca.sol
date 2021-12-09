@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: MIT
-
-
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -8,7 +6,6 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 /*- Total supply: 5000
--
 1 Genesis NFT in wallet = 1 free mint (996 Reserved Supply)
 - Dev mint function that allows us to mint for free (300 Reserved Supply)
 - Public mint 0.02 ETH mint price (3704 Supply)
@@ -29,7 +26,7 @@ contract Draca is ERC721Enumerable, Ownable {
     uint256 public publicMint = 3704;
 
   //  uint256 public totalCount = 5000;
-    //token Index tracker 
+
     uint256 public price = 20000000000000000; //0.02 ETH
 
     //string
@@ -58,6 +55,7 @@ contract Draca is ERC721Enumerable, Ownable {
         return bytes(baseURI).length > 0
             ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : '.json';
     }
+    //set Start
     function setStart(bool _start) public onlyOwner returns (bool) {
         started = _start;
         return started;
@@ -86,7 +84,7 @@ contract Draca is ERC721Enumerable, Ownable {
             _mint(_msgSender(), 1 + totalPublicMinted++);
         }
     }  
-     //write function to check if the sender owns genesis token if it does it gets one free mint of draca
+     //function to check if the sender owns genesis token if it does it gets one free mint of draca
     function mintDev(uint256 _times, uint256 _tokenId) payable public {
         require(_exists(_tokenId),  "User does not have a Genesis so cannot mint free.");
         require(started, "not started");
