@@ -24,15 +24,12 @@ contract Draca is ERC721Enumerable, Ownable {
     uint256 public totalFreeMinted;
     uint256 public totalDevMinted;
     uint256 public totalPublicMinted;
-
+    
+    uint256 public PRICE = 20000000000000000; //0.02 ETH
     uint256 public freeMint = 996;
     uint256 public devMint = 300;
     uint256 public publicMint = 3704;
     IERC20 public stackAddress;
-
-  //  uint256 public totalCount = 5000;
-
-    uint256 public PRICE = 20000000000000000; //0.02 ETH
 
     //string
     string public baseURI;
@@ -54,7 +51,7 @@ contract Draca is ERC721Enumerable, Ownable {
         baseURI = _newURI;
     }
 
-    //erc721 
+    //ERC271 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token.");
         //string memory baseURI = _baseURI();
@@ -66,7 +63,7 @@ contract Draca is ERC721Enumerable, Ownable {
         started = _start;
         return started;
     }
-
+    //TokensOfOwner
     function tokensOfOwner(address owner)
         public
         view
