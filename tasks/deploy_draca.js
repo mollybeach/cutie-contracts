@@ -49,10 +49,6 @@ task('deploy-draca').setAction(async function () {
   const runMintPublic = await instance.connect(deployer).mintFree(TIMES);
   await runMintPublic.wait();
 
-  //run withdrawTokens function
-  const runWithdrawTokens = await instance.connect(deployer).withdrawTokens();
-  await runWithdrawTokens.wait();
-
   console.log(`Deployed Draca to: ${instance.address}`);
   deployments.Draca = instance.address;
   

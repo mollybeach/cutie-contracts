@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 /*- Total supply: 5000
+
 1 Genesis NFT in wallet = 1 free mint (996 Reserved Supply)
 - Dev mint function that allows us to mint for free (300 Reserved Supply)
 - Public mint 0.02 ETH mint PRICE (3704 Supply)
