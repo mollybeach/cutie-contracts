@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 /*- Total supply: 5000
 1 Genesis NFT in wallet = 1 free mint (996 Reserved Supply)
 - Dev mint function that allows us to mint for free (300 Reserved Supply)
-- Public mint 0.02 ETH mint price (3704 Supply)
+- Public mint 0.02 ETH mint PRICE (3704 Supply)
 - Would be good to let free mints and public at the same time (every mint after the allocated free mints per user would be 0.02eth, just like public
 */
 
@@ -27,7 +27,7 @@ contract Draca is ERC721Enumerable, Ownable {
 
   //  uint256 public totalCount = 5000;
 
-    uint256 public price = 20000000000000000; //0.02 ETH
+    uint256 public PRICE = 20000000000000000; //0.02 ETH
 
     //string
     string public baseURI;
@@ -55,7 +55,7 @@ contract Draca is ERC721Enumerable, Ownable {
         return bytes(baseURI).length > 0
             ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : '.json';
     }
-    //set Start
+    //setStart 
     function setStart(bool _start) public onlyOwner returns (bool) {
         started = _start;
         return started;
@@ -99,7 +99,7 @@ contract Draca is ERC721Enumerable, Ownable {
     function mintPublic(uint256 _times) payable public {
         require(started, "not started");
         require(totalPublicMinted + _times <= totalPublicMinted, "max supply reached!");
-        require(msg.value == _times * price, "value error, please check price.");
+        require(msg.value == _times * PRICE, "value error, please check PRICE.");
         payable(owner()).transfer(msg.value);
         emit Mint(_msgSender(), totalPublicMinted+1, _times);
         for(uint256 i=0; i< _times; i++){
