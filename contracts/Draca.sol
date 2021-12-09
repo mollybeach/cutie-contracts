@@ -16,7 +16,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Draca is ERC721Enumerable, Ownable {
     using Strings for uint256;
-    event Mint(address indexed sender, uint256 startWith, uint256 times);
+    event MintDev(address indexed sender, uint256 startWith, uint256 times);
+    event MintFree(address indexed sender, uint256 startWith, uint256 times);
+    event MintPublic(address indexed sender, uint256 startWith, uint256 times);
 
     //supply counters 
     uint256 public totalFreeMinted;
@@ -78,34 +80,34 @@ contract Draca is ERC721Enumerable, Ownable {
         return ids;
     }
 
-    //write function to check if the sender owns genesis token if it does it gets one free mint of draca
+    //allow developer to mint 300 tokens for free
+    function mintDev(uint256 _times) payable public onlyOwner {
+        require(started, "not started");
+        require(totalFreeMinted + _times <= totalFreeMinted , "max supply reached!");
+        emit MintDev(_msgSender(), totalPublicMinted+1, _times);
+        for(uint256 i=0; i< _times; i++){
+            _mint(_msgSender(), 1 + totalPublicMinted++);
+    }
+    }
+
+    //allows public to mint 996 draca tokens for free if they are holders of Genesis token
     function mintFree(uint256 _times, uint256 _tokenId) payable public {
         require(_exists(_tokenId), "User does not have a Genesis so cannot mint free.");
         require(started, "not started");
         require(totalFreeMinted + _times <= totalFreeMinted , "max supply reached!");
-        emit Mint(_msgSender(), totalPublicMinted+1, _times);
+        emit MintFree(_msgSender(), totalPublicMinted+1, _times);
         for(uint256 i=0; i< _times; i++){
             _mint(_msgSender(), 1 + totalPublicMinted++);
         }
-    }  
-     //function to check if the sender owns genesis token if it does it gets one free mint of draca
-    function mintDev(uint256 _times, uint256 _tokenId) payable public {
-        require(_exists(_tokenId),  "User does not have a Genesis so cannot mint free.");
-        require(started, "not started");
-        require(totalDevMinted + _times <= totalDevMinted , "max supply reached!");
-        emit Mint(_msgSender(), totalPublicMinted+1, _times);
-        for(uint256 i=0; i< _times; i++){
-            _mint(_msgSender(), 1 + totalPublicMinted++);
-        }
-    }
+    } 
 
-    //if the sender is the owner of the token it can be minted for fre
+    //allows the public to mint up to 3704 Draca tokens for 0.02 ETH
     function mintPublic(uint256 _times) payable public {
         require(started, "not started");
         require(totalPublicMinted + _times <= totalPublicMinted, "max supply reached!");
         require(msg.value == _times * PRICE, "value error, please check PRICE.");
         payable(owner()).transfer(msg.value);
-        emit Mint(_msgSender(), totalPublicMinted+1, _times);
+        emit MintPublic(_msgSender(), totalPublicMinted+1, _times);
         for(uint256 i=0; i< _times; i++){
             _mint(_msgSender(), 1 + totalPublicMinted++);
         }
