@@ -38,8 +38,8 @@ task('deploy-draca').setAction(async function () {
   const approval = await erc20.connect(deployer).approve(instance.address, ALLOWED);
   await approval.wait();
   console.log('approval');
-  //run check started Function 
-  const setStart = await instance.callStatic.setStart();
+  //run  set start Function 
+  const setStart = await instance.callStatic.setStart(true);
   console.log(setStart.toString());
 /*
   //run TokensOfOwner Function
