@@ -22,8 +22,7 @@ task('deploy-draca').setAction(async function () {
 
   const [deployer] = await ethers.getSigners();
   const factory = await ethers.getContractFactory('Draca', deployer);
-  const instance;
-
+  
   const constructor = await factory.deploy( //must have the same amount of arguments as the contract constructor
     NAME,
     SYMBOL,
@@ -32,16 +31,15 @@ task('deploy-draca').setAction(async function () {
   ); 
   
   //before deploy : 
-  function beforeDeployment() {
+
     console.log("beforeDeployment......");
-    instance = await factory.deploy(constructor);
-  }
+    const instance = await factory.deploy(constructor);
+
     //after deploy :
-  function afterDeployment() {
-    console.log("afterDeployment ......");
-    instance = await ethers.getContractAt('Draca',deployments.Draca);
-  }
-  beforeDeployment();
+   // console.log("afterDeployment ......");
+   // instance = await ethers.getContractAt('Draca',deployments.Draca);
+  
+
   await instance.deployed();
   console.log('instance');
   /*//call the approval function from Erc20 openZeppelin contract
