@@ -45,11 +45,11 @@ task('deploy-draca').setAction(async function () {
    //run MintFunction
   const runMint = await instance.connect(deployer).mint(QTY);
   await runMint.wait();
-/*
+
   //run devMintFunction
   const runDevMint = await instance.connect(deployer).devMint();
   await runDevMint.wait();
-
+/*
   //run mintFreeFunction
   const runMintFree = await instance.connect(deployer).mintFree(QTY);
   await runMintFree.wait();
@@ -57,7 +57,7 @@ task('deploy-draca').setAction(async function () {
   //run mintPublicFunction
   const runMintPublic = await instance.connect(deployer).mintPublic(QTY);
   await runMintPublic.wait();
-  
+
   */
 
   console.log(`Deployed Draca to: ${instance.address}`);
