@@ -17,7 +17,7 @@ task('deploy-draca').setAction(async function () {
 
   const NAME = "Draca";
   const SYMBOL = "DRACA"
-  const BASE_URI = "ipfs://QmQSYiRMmF7KzVCiAMetjuY1b9pJqCgjzeVsJmFSpiwkms/"
+  const BASE_URI = "ipfs://"
   const ADDRESS = deployments.draca;
 
   const [deployer] = await ethers.getSigners();
