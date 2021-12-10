@@ -1,6 +1,7 @@
 const fs = require('fs');
 const deployments = require('../data/deployments');
-/*  write it task functions for these solidity functions:
+/*  
+write it task functions for these solidity functions:
 
   function setStart(bool _start) public onlyOwner returns (bool)
   function mint(uint256 _qty)
@@ -14,6 +15,7 @@ task('deploy-draca').setAction(async function () {
 
   const QTY = 1;
   const [deployer] = await ethers.getSigners();
+  const genesisAddress = `0x84126F348a19557148581e3dc36Fc2C36e4c33C3`
   
    /*************** before deployment : *************/
     
@@ -38,6 +40,11 @@ task('deploy-draca').setAction(async function () {
   const setStart = await instance.callStatic.setStart();
   console.log(setStart.toString());
   console.log("setStart() passed successfully");
+
+//run setAddress Function
+  const runSetAddresses = await instance.callStatic.setAddresses(genesisAddress);
+  console.log(runSetAddresses.toString());
+  console.log("setAddresses() passed successfully");
 
   //run TotalSupply function
   const totalSupply = await instance.callStatic.totalSupply();
