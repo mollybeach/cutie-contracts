@@ -23,12 +23,13 @@ contract Draca is ERC721Enumerable, Ownable {
     event FreeMintEvent(address indexed sender, uint256 startWith, uint256 _qty);
     event PublicMintEvent(address indexed sender, uint256 startWith, uint256 _qty);
 
-    //supply counters 
+    //uint256 supply counters 
     uint256 public devTotal;
     uint256 public freeTotal;
     uint256 public publicTotal;
     uint256 public totalMinted;
 
+    //uint256
     uint256 public maxMintsPerWallet= 1;
     uint256 public PRICE = 20000000000000000; //0.02 ETH
     uint256 public freeSupply = 996;
@@ -45,7 +46,7 @@ contract Draca is ERC721Enumerable, Ownable {
     mapping(address => uint256) public addressMintedBalance;
     mapping (uint256 => string) private _tokenURIs;
     
-    //string
+    //strings
     string public baseURI;
     
     //bool
@@ -60,6 +61,8 @@ contract Draca is ERC721Enumerable, Ownable {
         baseURI = baseURI_;
         contractAddress = address(this);
     }
+
+    //Modifiers
     modifier canMintFree(uint256 _qty) {
         require(_qty > 0 , "need to mint at least 1 NFT");
         require(freeTotal + _qty <= freeSupply, "This mint would pass max freesupply");
@@ -73,40 +76,41 @@ contract Draca is ERC721Enumerable, Ownable {
         require(addressMintedBalance[msg.sender] + _qty <= maxMintsPerWallet, "Too many mints for this wallet");
         _;
     }
-    function setAddresses(address _dracaAddress, address _genesisAddress) public onlyOwner {
-        dracaAddress = IERC721(_dracaAddress);
-        genesisAddress = IERC721(_genesisAddress);
-    }
 
-   //basic functions. 
+
+   //Basic Functions 
     function _baseURI() internal view virtual override returns (string memory){
         return baseURI;
     }
     function setBaseURI(string memory _newURI) public onlyOwner {
         baseURI = _newURI;
     }
+    function setAddresses(address _dracaAddress, address _genesisAddress) public onlyOwner {
+        dracaAddress = IERC721(_dracaAddress);
+        genesisAddress = IERC721(_genesisAddress);
+    }
 
-     //ERC271 
+    //ERC271 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(_exists(tokenId), "tokenId does not exist.");
-        
-        return bytes(baseURI).length > 0
-            ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : ".json";
+        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : ".json";
     }
     function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal virtual {
             require(_exists(tokenId), "ERC721Metadata: URI set of nonexistent token");
             _tokenURIs[tokenId] = _tokenURI;
     }
+    
     //setStart 
     function setStart(bool _start) public onlyOwner returns (bool) {
         started = _start;
         return started;
     }
-    //total supply 
+    //Total Supply 
     function totalSupply() public view virtual override returns (uint256) {
         return totalMinted;
     }
-    //mint fuctions
+
+    //Minting fuctions
     function mint(uint256 _qty) internal {
         for(uint256 i = 0; i < _qty; i++){
             _mint(_msgSender(), 1 + totalMinted++);
@@ -114,13 +118,13 @@ contract Draca is ERC721Enumerable, Ownable {
         }
         emit MintEvent(_msgSender(), totalMinted+1, _qty);
     }
-    //allow team to mint 300 tokens for free
+    //Allows Team to mint 300 tokens for free
     function devMint() public onlyOwner {
         require(started, "not started");
         mint(devSupply);
         emit DevMintEvent(_msgSender(), devTotal+devSupply, devSupply);
     }
-    //allows public to mint 996 draca tokens for free if they are holders of Genesis token 
+    //Allows Public to mint 996 draca tokens for free if they are holders of Genesis token 
     function mintFree(uint256 _qty) public canMintFree(_qty) {
         require(started, "not started");
         require(genesisAddress.balanceOf(msg.sender) > 0 , "User must be a holder of Genesis to mint free.");
@@ -128,7 +132,7 @@ contract Draca is ERC721Enumerable, Ownable {
         mint(_qty);
         emit FreeMintEvent(_msgSender(), freeTotal+1, _qty);
     }
-   //allows public to mint 3704 tokens of Draca for 0.2Eth
+   //Allows Public to mint 3704 tokens of Draca for 0.2Eth
     function mintPublic(uint256 _qty) public payable canMint(_qty)  {
         require(started, "not started");
         require(publicTotal + _qty <= publicSupply, "max available public mints reached!");
