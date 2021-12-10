@@ -37,7 +37,7 @@
   "function setAddresses(address _dracaAddress, address _genesisAddress)",
   "function setApprovalForAll(address operator, bool approved)",
   "function setBaseURI(string _newURI)",
-  "function setStart(bool _start) returns (bool)",
+  "function setStart()",
   "function supportsInterface(bytes4 interfaceId) view returns (bool)",
   "function symbol() view returns (string)",
   "function tokenByIndex(uint256 index) view returns (uint256)",

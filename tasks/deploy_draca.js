@@ -16,26 +16,26 @@ task('deploy-draca').setAction(async function () {
   const [deployer] = await ethers.getSigners();
   
    /*************** before deployment : *************/
-    /*
+    
     const NAME = "Draca";
     const SYMBOL = "DRACA"
     const BASE_URI = "ipfs://"
     console.log("beforeDeployment......");
     const factory = await ethers.getContractFactory('Draca', deployer);
     const instance = await factory.deploy(NAME, SYMBOL, BASE_URI); //must have the same amount of arguments as the contract constructor
-    */
+    
 
   /*************** after deployment : *************/
     
-  console.log("afterDeployment ......");
-  const instance = await ethers.getContractAt('Draca',deployments.Draca);
-  
+ // console.log("afterDeployment ......");
+  //const instance = await ethers.getContractAt('Draca',deployments.Draca);
+
   /********call and await the instance to be deployed ********/
   await instance.deployed();
 
  /**************** test contract functions:  *************/
   //run  setStart Function 
-  const setStart = await instance.callStatic.setStart(true);
+  const setStart = await instance.callStatic.setStart();
   console.log(setStart.toString());
 
   //run TotalSupply function
@@ -49,8 +49,12 @@ task('deploy-draca').setAction(async function () {
   //run devMintFunction
   const runDevMint = await instance.connect(deployer).devMint();
   await runDevMint.wait();
-/*
+
   //run mintFreeFunction
+  const runMintFree = await instance.connect(deployer).mintFree(QTY);
+  await runMintFree.wait();
+/*
+
   const runMintFree = await instance.connect(deployer).mintFree(QTY);
   await runMintFree.wait();
 
