@@ -38,8 +38,8 @@ require("./tasks/set_stacked_staked_rewards");
 require("./tasks/deploy_default_erc20");
 require("./tasks/deploy_lottery");
 */
-require("./tasks/deploy_lottery");
-require("./tasks/deploy_default_erc20");
+//require("./tasks/deploy_lottery");
+//require("./tasks/deploy_default_erc20");
 require("./tasks/deploy_draca");
 
 
