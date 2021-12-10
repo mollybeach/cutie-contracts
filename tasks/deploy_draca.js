@@ -49,7 +49,7 @@ task('deploy-draca').setAction(async function () {
   await runMint.wait();
   console.log("mint() passed successfully");
 
-  //run devMintFunction
+   //run devMintFunction
   //const runDevMint = await instance.connect(deployer).devMint();
   //await runDevMint.wait();
   //console.log("runDevMint() passed successfully");
