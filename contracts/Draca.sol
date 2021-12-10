@@ -124,8 +124,8 @@ contract Draca is ERC721Enumerable, Ownable {
     function mintPublic(uint256 _qty) public payable {
       //  require(started, "not started");
         require(_qty > 0 , "need to mint at least 1 NFT");
-        require(msg.value == _qty * PRICE, "insufficient funds");
-        require(addressMintedBalance[msg.sender] + _qty <= maxMintsPerWallet, "Too many mints for this wallet");
+       // require(msg.value == _qty * PRICE, "insufficient funds");
+       // require(addressMintedBalance[msg.sender] + _qty <= maxMintsPerWallet, "Too many mints for this wallet");
         require(publicTotal + _qty <= publicSupply, "max available public mints reached!");
         payable(owner()).transfer(msg.value);
         mint(_qty);
