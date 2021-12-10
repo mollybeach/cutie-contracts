@@ -114,7 +114,7 @@ contract Draca is ERC721Enumerable, Ownable {
         require(_qty > 0 , "need to mint at least 1 NFT");
         require(freeTotal + _qty <= freeSupply, "This mint would pass max freesupply");
       //  require(IERC721(contractAddress).balanceOf(msg.sender) < maxMintsPerWallet, "Max mint amount allowed exceeded for this wallet");
-        require(genesisAddress.balanceOf(msg.sender) > 0 , "User must be a holder of Genesis to mint free.");
+     //   require(genesisAddress.balanceOf(msg.sender) > 0 , "User must be a holder of Genesis to mint free.");
         require(freeTotal + _qty <= freeSupply, "max available mints reached!");
         mint(_qty);
         freeTotal += _qty;
