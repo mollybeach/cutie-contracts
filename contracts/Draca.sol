@@ -56,12 +56,10 @@ contract Draca is ERC721Enumerable, Ownable {
     constructor(
         string memory _name,
         string memory _symbol,
-        string memory baseURI_,
-        address _contractAddress
+        string memory baseURI_
     ) ERC721(_name, _symbol) {
         baseURI = baseURI_;
-        contractAddress = _contractAddress;
-       // contractAddress = address(this);
+        contractAddress = address(this);
     }
 
     //Modifiers

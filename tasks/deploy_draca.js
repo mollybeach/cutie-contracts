@@ -18,7 +18,7 @@ task('deploy-draca').setAction(async function () {
   const NAME = "Draca";
   const SYMBOL = "DRACA"
   const BASE_URI = "ipfs://"
-  const ADDRESS = deployments.draca;
+  const ALLOWED = ethers.utils.parseUnits("100000000000000",18);
 
   const [deployer] = await ethers.getSigners();
   const factory = await ethers.getContractFactory('Draca', deployer);
@@ -27,7 +27,6 @@ task('deploy-draca').setAction(async function () {
     NAME,
     SYMBOL,
     BASE_URI,
-    ADDRESS
   ); 
   
   //before deploy : 
@@ -42,10 +41,14 @@ task('deploy-draca').setAction(async function () {
 
   await instance.deployed();
   console.log('instance');
-  /*//call the approval function from Erc20 openZeppelin contract
+  /*
+  //call the approval function from Erc20 openZeppelin contract
+  const defaultAddress = deployments.DefaultErc20;
+  const erc20 = await ethers.getContractAt('DefaultErc20', deployments.DefaultErc20);
   const approval = await erc20.connect(deployer).approve(instance.address, ALLOWED);
   await approval.wait();
-  console.log('approval');*/
+  console.log('approval');
+  */
   //run  set start Function 
   const setStart = await instance.callStatic.setStart(true);
   console.log(setStart.toString());
