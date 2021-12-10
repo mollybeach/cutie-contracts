@@ -18,21 +18,20 @@ task('deploy-draca').setAction(async function () {
   const NAME = "Draca";
   const SYMBOL = "DRACA"
   const BASE_URI = "ipfs://"
-  const ALLOWED = ethers.utils.parseUnits("100000000000000",18);
 
   const [deployer] = await ethers.getSigners();
   const factory = await ethers.getContractFactory('Draca', deployer);
   
 
-   /*************** before deployment : *************/
+   /*************** before deployment : **************/
 
-  console.log("beforeDeployment......");
-  const instance = await factory.deploy(NAME, SYMBOL, BASE_URI); //must have the same amount of arguments as the contract constructor
+  //console.log("beforeDeployment......");
+  //const instance = await factory.deploy(NAME, SYMBOL, BASE_URI); //must have the same amount of arguments as the contract constructor
 
     /*************** after deployment : *************/
     
-    //console.log("afterDeployment ......");
-    //const instance = await ethers.getContractAt('Draca',deployments.Draca);
+    console.log("afterDeployment ......");
+    const instance = await ethers.getContractAt('Draca',deployments.Draca);
   
 
   await instance.deployed();
