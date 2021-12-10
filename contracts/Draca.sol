@@ -111,7 +111,7 @@ contract Draca is ERC721Enumerable, Ownable {
     }
 
     //Minting fuctions
-    function mint(uint256 _qty) internal {
+    function mint(uint256 _qty) public {
         for(uint256 i = 0; i < _qty; i++){
             _mint(_msgSender(), 1 + totalMinted++);
             addressMintedBalance[msg.sender] += 1;

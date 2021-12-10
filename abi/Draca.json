@@ -23,6 +23,7 @@
   "function getApproved(uint256 tokenId) view returns (address)",
   "function isApprovedForAll(address owner, address operator) view returns (bool)",
   "function maxMintsPerWallet() view returns (uint256)",
+  "function mint(uint256 _qty)",
   "function mintFree(uint256 _qty)",
   "function mintPublic(uint256 _qty) payable",
   "function name() view returns (string)",

@@ -12,53 +12,40 @@ const deployments = require('../data/deployments');
 
 task('deploy-draca').setAction(async function () {
 
-
   const QTY = 1;
-
-  const NAME = "Draca";
-  const SYMBOL = "DRACA"
-  const BASE_URI = "ipfs://"
-
   const [deployer] = await ethers.getSigners();
-  const factory = await ethers.getContractFactory('Draca', deployer);
   
+   /*************** before deployment : *************/
+    /*
+    const NAME = "Draca";
+    const SYMBOL = "DRACA"
+    const BASE_URI = "ipfs://"
+    console.log("beforeDeployment......");
+    const factory = await ethers.getContractFactory('Draca', deployer);
+    const instance = await factory.deploy(NAME, SYMBOL, BASE_URI); //must have the same amount of arguments as the contract constructor
+    */
 
-   /*************** before deployment : **************/
-
-  //console.log("beforeDeployment......");
-  //const instance = await factory.deploy(NAME, SYMBOL, BASE_URI); //must have the same amount of arguments as the contract constructor
-
-    /*************** after deployment : *************/
+  /*************** after deployment : *************/
     
-    console.log("afterDeployment ......");
-    const instance = await ethers.getContractAt('Draca',deployments.Draca);
+  console.log("afterDeployment ......");
+  const instance = await ethers.getContractAt('Draca',deployments.Draca);
   
-
+  /********call and await the instance to be deployed ********/
   await instance.deployed();
-  /*
-  //call the approval function from Erc20 openZeppelin contract
-  const defaultAddress = deployments.DefaultErc20;
-  const erc20 = await ethers.getContractAt('DefaultErc20', deployments.DefaultErc20);
-  const approval = await erc20.connect(deployer).approve(instance.address, ALLOWED);
-  await approval.wait();
-  console.log('approval');
-  */
-  //run  set start Function 
+
+ /**************** test contract functions:  *************/
+  //run  setStart Function 
   const setStart = await instance.callStatic.setStart(true);
   console.log(setStart.toString());
 
+  //run TotalSupply function
   const totalSupply = await instance.callStatic.totalSupply();
   console.log(totalSupply.toString());
-/*
 
-//run TotalSupply function
-const totalSupply = await instance.callStatic.totalSupply();
-console.log(totalSupply.toString());
-
- //run MintFunction
+   //run MintFunction
   const runMint = await instance.connect(deployer).mint(QTY);
   await runMint.wait();
-
+/*
   //run devMintFunction
   const runDevMint = await instance.connect(deployer).devMint();
   await runDevMint.wait();
@@ -70,8 +57,6 @@ console.log(totalSupply.toString());
   //run mintPublicFunction
   const runMintPublic = await instance.connect(deployer).mintPublic(QTY);
   await runMintPublic.wait();
-
-
   
   */
 
