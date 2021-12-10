@@ -56,10 +56,12 @@ contract Draca is ERC721Enumerable, Ownable {
     constructor(
         string memory _name,
         string memory _symbol,
-        string memory baseURI_
+        string memory baseURI_,
+        address _contractAddress
     ) ERC721(_name, _symbol) {
         baseURI = baseURI_;
-        contractAddress = address(this);
+        contractAddress = _contractAddress;
+       // contractAddress = address(this);
     }
 
     //Modifiers
@@ -72,7 +74,7 @@ contract Draca is ERC721Enumerable, Ownable {
     modifier canMint(uint256 _qty) {
         require(_qty > 0 , "need to mint at least 1 NFT");
         require(publicTotal+ _qty <= publicSupply, "This mint would pass max supply");
-         require(msg.value == _qty * PRICE, "insufficient funds");
+        require(msg.value == _qty * PRICE, "insufficient funds");
         require(addressMintedBalance[msg.sender] + _qty <= maxMintsPerWallet, "Too many mints for this wallet");
         _;
     }
