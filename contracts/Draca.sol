@@ -122,7 +122,8 @@ contract Draca is ERC721Enumerable, Ownable {
     function devMint() public onlyOwner {
         require(started, "not started");
         mint(devSupply);
-        emit DevMintEvent(_msgSender(), devTotal+devSupply, devSupply);
+        devTotal += devSupply;
+        emit DevMintEvent(_msgSender(), devTotal, devSupply);
     }
     //Allows Public to mint 996 draca tokens for free if they are holders of Genesis token 
     function mintFree(uint256 _qty) public canMintFree(_qty) {
@@ -130,7 +131,8 @@ contract Draca is ERC721Enumerable, Ownable {
         require(genesisAddress.balanceOf(msg.sender) > 0 , "User must be a holder of Genesis to mint free.");
         require(freeTotal + _qty <= freeSupply, "max available mints reached!");
         mint(_qty);
-        emit FreeMintEvent(_msgSender(), freeTotal+1, _qty);
+        freeTotal += _qty;
+        emit FreeMintEvent(_msgSender(), freeTotal, _qty);
     }
    //Allows Public to mint 3704 tokens of Draca for 0.2Eth
     function mintPublic(uint256 _qty) public payable canMint(_qty)  {
@@ -138,7 +140,8 @@ contract Draca is ERC721Enumerable, Ownable {
         require(publicTotal + _qty <= publicSupply, "max available public mints reached!");
         payable(owner()).transfer(msg.value);
         mint(_qty);
-        emit PublicMintEvent(_msgSender(), publicTotal+1, _qty);
+        publicTotal += _qty;
+        emit PublicMintEvent(_msgSender(), publicTotal, _qty);
     }
 
 }
