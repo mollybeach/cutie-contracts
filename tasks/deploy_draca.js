@@ -27,7 +27,7 @@ task('deploy-draca').setAction(async function () {
 
   /*************** after deployment : *************/
     
- // console.log("afterDeployment ......");
+  //console.log("afterDeployment ......");
   //const instance = await ethers.getContractAt('Draca',deployments.Draca);
 
   /********call and await the instance to be deployed ********/
@@ -37,32 +37,32 @@ task('deploy-draca').setAction(async function () {
   //run  setStart Function 
   const setStart = await instance.callStatic.setStart();
   console.log(setStart.toString());
+  console.log("setStart() passed successfully");
 
   //run TotalSupply function
   const totalSupply = await instance.callStatic.totalSupply();
   console.log(totalSupply.toString());
+  console.log("totalSupply() passed successfully");
 
    //run MintFunction
   const runMint = await instance.connect(deployer).mint(QTY);
   await runMint.wait();
+  console.log("mint() passed successfully");
 
   //run devMintFunction
-  const runDevMint = await instance.connect(deployer).devMint();
-  await runDevMint.wait();
+  //const runDevMint = await instance.connect(deployer).devMint();
+  //await runDevMint.wait();
+  //console.log("runDevMint() passed successfully");
 
   //run mintFreeFunction
   const runMintFree = await instance.connect(deployer).mintFree(QTY);
   await runMintFree.wait();
-/*
+  console.log("runMintFree() passed successfully");
 
-  const runMintFree = await instance.connect(deployer).mintFree(QTY);
-  await runMintFree.wait();
-
-  //run mintPublicFunction
+   //run mintPublicFunction
   const runMintPublic = await instance.connect(deployer).mintPublic(QTY);
   await runMintPublic.wait();
-
-  */
+  console.log("runMintPublic() passed successfully");
 
   console.log(`Deployed Draca to: ${instance.address}`);
   deployments.Draca = instance.address;
