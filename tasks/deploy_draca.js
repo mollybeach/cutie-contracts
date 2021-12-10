@@ -7,6 +7,7 @@ const deployments = require('../data/deployments');
   function mint(uint256 _times) payable public
 
 */
+
 task('deploy-draca').setAction(async function () {
 
   const TOKEN_ID = 0000;
@@ -15,6 +16,8 @@ task('deploy-draca').setAction(async function () {
   const ALLOWED = ethers.utils.parseUnits("100000000000000",18);
   const NAME = "Draca";
   const SYMBOL = "DRACA"
+  const BASE_URI = "ipfs://QmQSYiRMmF7KzVCiAMetjuY1b9pJqCgjzeVsJmFSpiwkms/"
+  
 
 
   const [deployer] = await ethers.getSigners();
@@ -26,6 +29,7 @@ task('deploy-draca').setAction(async function () {
   const instance = await factory.deploy( //must have the same amount of arguments as the contract constructor
     NAME,
     SYMBOL,
+    BASE_URI,
     STACK_ADDRESS,
   ); 
   //after deploy :
