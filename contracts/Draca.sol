@@ -114,8 +114,8 @@ contract Draca is ERC721Enumerable, Ownable {
         require(freeTotal + _qty <= freeSupply, "This mint would pass max freesupply");
         require(genesisAddress.balanceOf(msg.sender) < maxMintsPerWallet, "Max mint amount allowed exceeded for this wallet for free mints");
         _mint(msg.sender, freeTotal + _qty);
-        freeTotal += _qty;
         mint(_qty);
+        freeTotal += _qty;
         emit FreeMintEvent(_msgSender(), freeTotal, _qty);
     }
    //Allows Public to mint 3704 tokens of Draca for 0.2Eth
