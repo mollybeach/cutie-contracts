@@ -107,7 +107,7 @@ contract Draca is ERC721Enumerable, Ownable {
         devTotal += devSupply;
         emit DevMintEvent(_msgSender(), devTotal, devSupply);
     }
-    //Allows Public to mint 996 draca tokens for free if they are holders of Genesis token 
+    //Allows Public to mint 996 draca tokens for free if they are holders of Genesis Token 
     function mintFree(uint256 _qty) public  {
         require(started, "not started");
         require(_qty > 0 , "need to mint at least 1 NFT");
