@@ -34,7 +34,8 @@ contract CuredCats is ERC721Enumerable, Ownable {
     uint256 public maxMintsPerWallet= 1;
     uint256 public curedCatSupply = 999;
     uint256 public VXSupply = 999;
-    uint256 public MUTANT_CATS_TOKEN_ID = 1;
+    uint256 public MUTANT_CATS_TOKEN_ID;
+    uint256 public CURED_CATS_TOKEN_ID;
     uint256 public SERUM_TOKEN_ID = 1;
     uint256 public SERUM_COST = 1;
 
@@ -120,10 +121,10 @@ contract CuredCats is ERC721Enumerable, Ownable {
             MUTANT_CATS_TOKEN_ID = _tokenIds[i];
             mutantCatsAddress.safeTransferFrom(msg.sender, contractAddress, MUTANT_CATS_TOKEN_ID);
             emit TransferMutantCatEvent(msg.sender, contractAddress, MUTANT_CATS_TOKEN_ID); 
-            uint256 CURED_CAT_ID = curedCatTotal + 1;
+            CURED_CATS_TOKEN_ID = curedCatTotal + 1;
             _mint(_msgSender(), curedCatTotal++);
             addressMintedBalance[msg.sender] += 1;
-            emit MintCuredCatEvent(msg.sender, CURED_CAT_ID);
+            emit MintCuredCatEvent(msg.sender, CURED_CATS_TOKEN_ID);
         }
     }
 
