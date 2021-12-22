@@ -88,7 +88,6 @@ contract CuredCats is ERC721Enumerable, Ownable , IERC721Receiver {
     ) external pure override returns (bytes4) {
         return IERC721Receiver.onERC721Received.selector;
     }
-
     //setStart 
     function setStart() public onlyOwner  {
         started = true;
