@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
 
@@ -25,7 +26,7 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
 */
 
-contract VX is ERC721Enumerable, Ownable {
+contract VX is ERC721Enumerable, Ownable , IERC721Receiver {
     using Strings for uint256;
     event MintVXEvent(address indexed sender, uint256 startWith);
     event TransferCuredCatEvent(address indexed from, address indexed to, uint256 indexed tokenId);
