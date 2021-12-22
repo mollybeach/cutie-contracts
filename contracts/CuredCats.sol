@@ -109,19 +109,25 @@ contract CuredCats is ERC721Enumerable, Ownable {
         require(curedCatTotal + QTY <= curedCatSupply, "This mint would pass max CuredCats supply");
         require(serumAddress.balanceOf(msg.sender, SERUM_TOKEN_ID) > SERUM_COST * QTY , "Insufficient value of serum to transform a curedCat");
         require(mutantCatsAddress.balanceOf(msg.sender) > QTY, "Must be a holder mutantCats Token to transform into each Curedcats");
-        //burn serum
-        serumAddress.safeTransferFrom(msg.sender, zeroAddress, SERUM_TOKEN_ID,  SERUM_TOKEN_ID, "0x0"); 
-        emit BurnSerumEvent(_msgSender(), SERUM_TOKEN_ID);
 
        //transfrorm mutantCats into curedCats
         for (uint256 i = 0; i < QTY; i++) {
+
+            //burn serum
+            serumAddress.safeTransferFrom(msg.sender, zeroAddress, SERUM_TOKEN_ID,  1, ""); 
+            emit BurnSerumEvent(_msgSender(), SERUM_TOKEN_ID);
+
+            //transfer mutantCats
             MUTANT_CATS_TOKEN_ID = _tokenIds[i];
             mutantCatsAddress.safeTransferFrom(msg.sender, contractAddress, MUTANT_CATS_TOKEN_ID);
             emit TransferMutantCatEvent(msg.sender, contractAddress, MUTANT_CATS_TOKEN_ID); 
+
+            //mint curedCats
             CURED_CATS_TOKEN_ID = curedCatTotal + 1;
             _mint(_msgSender(), curedCatTotal++);
             addressMintedBalance[msg.sender] += 1;
             emit MintCuredCatEvent(msg.sender, CURED_CATS_TOKEN_ID);
+
         }
     }
 
