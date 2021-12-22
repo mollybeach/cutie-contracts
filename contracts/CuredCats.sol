@@ -104,12 +104,12 @@ contract CuredCats is ERC721Enumerable, Ownable {
         return curedCatTotal;
     }
 
-    //Allows Public to mint mintCuredCats tokens if they are holders of CuredCats Token for Serum 
+    //Allows Public transform MutantCats tokens into CuredCats tokens for the price of 1 Serum
     function transformCuredCat(uint256[] calldata _tokenIds)  public {
         uint256 QTY = _tokenIds.length;
         require(started, "not started");
         require(curedCatTotal + QTY <= curedCatSupply, "This mint would pass max CuredCats supply");
-        require(serumAddress.balanceOf(msg.sender, SERUM_TOKEN_ID) > SERUM_COST * QTY , "Insufficient value of serum to transform a curedCat");
+        require(serumAddress.balanceOf(msg.sender, SERUM_TOKEN_ID) >= SERUM_COST * QTY , "Insufficient value of serum to transform a curedCat");
         require(mutantCatsAddress.balanceOf(msg.sender) > QTY, "Must be a holder mutantCats Token to transform into each Curedcats");
 
        //transfrorm mutantCats into curedCats
