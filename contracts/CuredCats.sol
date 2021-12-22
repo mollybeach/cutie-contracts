@@ -38,6 +38,7 @@ contract CuredCats is ERC721Enumerable, Ownable {
     uint256 public SERUM_COST = 1;
 
     //addressses
+    IERC721 public curedCatsAddress;
     IERC721 public mutantCatsAddress;
     IERC1155 public serumAddress;
     address public zeroAddress;
@@ -73,6 +74,7 @@ contract CuredCats is ERC721Enumerable, Ownable {
     function setAddresses(address _mutantCatsAddress, address _serumAddress) public onlyOwner {
         mutantCatsAddress = IERC721(_mutantCatsAddress);
         serumAddress = IERC1155(_serumAddress);
+        curedCatsAddress = IERC721(contractAddress);
     }
 
     //ERC271 
@@ -112,7 +114,6 @@ contract CuredCats is ERC721Enumerable, Ownable {
 
        //transfrorm mutantCats into curedCats
         for (uint256 i = 0; i < QTY; i++) {
-
             //burn serum
             serumAddress.safeTransferFrom(msg.sender, zeroAddress, SERUM_TOKEN_ID,  1, ""); 
             emit BurnSerumEvent(_msgSender(), SERUM_TOKEN_ID);
@@ -127,16 +128,14 @@ contract CuredCats is ERC721Enumerable, Ownable {
             _mint(_msgSender(), curedCatTotal++);
             addressMintedBalance[msg.sender] += 1;
             emit MintCuredCatEvent(msg.sender, CURED_CATS_TOKEN_ID);
-
         }
     }
 
     // Withdraw Cured Cats
-    /*  function withdrawCuredCats() external onlyOwner {
-        uint256 curedCatSupply = contractAddress.balanceOf(address(this));
-        contractAddress.transferFrom(address(this), msg.sender, curedCatSupply);
+    function withdrawCuredCats() external onlyOwner {
+        curedCatSupply = curedCatsAddress.balanceOf(address(this));
+        curedCatsAddress.transferFrom(address(this), msg.sender, curedCatSupply);
     }
-   */
 
 
 }
