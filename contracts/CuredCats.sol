@@ -62,6 +62,7 @@ contract CuredCats is ERC721Enumerable, Ownable {
     ) ERC721(_name, _symbol) {
         baseURI = baseURI_;
         contractAddress = address(this);
+        curedCatsAddress = IERC721(contractAddress);
     }
 
    //Basic Functions 
@@ -74,9 +75,7 @@ contract CuredCats is ERC721Enumerable, Ownable {
     function setAddresses(address _mutantCatsAddress, address _serumAddress) public onlyOwner {
         mutantCatsAddress = IERC721(_mutantCatsAddress);
         serumAddress = IERC1155(_serumAddress);
-        curedCatsAddress = IERC721(contractAddress);
     }
-
     //ERC271 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(_exists(tokenId), "tokenId does not exist.");
