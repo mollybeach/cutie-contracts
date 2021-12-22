@@ -17,6 +17,10 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
     So u need to transfer it to 0 address when u mint
     And they need to transfer the mutantcat to the contract when minting
     Create a method that can withdraw the cats
+
+
+    Breed a VX with two curedCats with Fish
+
     
 
 */
@@ -40,6 +44,7 @@ contract VX is ERC721Enumerable, Ownable {
     uint256[] VXLastBred = new uint256[](999);
 
     //addressses
+    IERC721 public VXAddress;
     IERC721 public curedCatsAddress;
     IERC1155 public fishAddress;
     address public zeroAddress;
@@ -63,6 +68,7 @@ contract VX is ERC721Enumerable, Ownable {
     ) ERC721(_name, _symbol) {
         baseURI = baseURI_;
         contractAddress = address(this);
+        VXAddress = IERC721(contractAddress);
     }
 
    //Basic Functions 
@@ -107,33 +113,27 @@ contract VX is ERC721Enumerable, Ownable {
         return VXLastBred[tokenId];
     }
 
-        //Allows Public to breed VX if they are holders of C2 uredCats Tokens
+        //Allows Public to breed VX with two curedCats tokens using Fish
     function breedVX(uint256[] calldata _tokenIds)  public {
-
         require(started, "not started");
         require(VXTotal + 2 <= VXSupply, "This mint would pass max VX supply");
-        //check funds
         require(fishAddress.balanceOf(msg.sender, FISH_TOKEN_ID) > FISH_COST, "Insufficient value of FISH to breed a VX");
         require(curedCatsAddress.balanceOf(msg.sender) > 2, "Must be a holder 2 Curedcats Token to breed VX"); 
-
         require(curedCatsAddress.ownerOf(_tokenIds[0]) == _msgSender() && curedCatsAddress.ownerOf(_tokenIds[1]) == _msgSender(), "must be the owner of both cured cats to breed");
-
         fishAddress.safeTransferFrom(msg.sender, zeroAddress,FISH_TOKEN_ID,  FISH_TOKEN_ID, "0x0"); 
         emit BurnFishEvent(_msgSender(), FISH_TOKEN_ID);
         curedCatsAddress.safeTransferFrom(msg.sender, contractAddress, CURED_CATS_TOKEN_ID);
         emit TransferCuredCatEvent(msg.sender, contractAddress, CURED_CATS_TOKEN_ID);  
-       //mint VX
         _mint(_msgSender(), VXTotal++);
         addressMintedBalance[msg.sender] += 1;
         emit MintVXEvent(_msgSender(), VXTotal);
     }
 
     // Withdraw Cats
-    /*  function withdrawVX() external onlyOwner {
-        uint256 curedVXSupply = contractAddress.balanceOf(address(this));
-        contractAddress.transferFrom(address(this), msg.sender, curedVXupply);
+    function withdrawVX() external onlyOwner {
+        supplyVX = VXAddress.balanceOf(address(this));
+        VXAddress.transferFrom(address(this), msg.sender,supplyVX);
     }
-   */
 
 
 }
