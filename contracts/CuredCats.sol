@@ -31,9 +31,7 @@ contract CuredCats is ERC721Enumerable, Ownable {
     uint256 public curedCatTotal;
 
     //uint256
-    uint256 public maxMintsPerWallet= 1;
     uint256 public curedCatSupply = 999;
-    uint256 public VXSupply = 999;
     uint256 public MUTANT_CATS_TOKEN_ID;
     uint256 public CURED_CATS_TOKEN_ID;
     uint256 public SERUM_TOKEN_ID = 1;
@@ -109,7 +107,6 @@ contract CuredCats is ERC721Enumerable, Ownable {
         uint256 QTY = _tokenIds.length;
         require(started, "not started");
         require(curedCatTotal + QTY <= curedCatSupply, "This mint would pass max CuredCats supply");
-        require(IERC721(contractAddress).balanceOf(msg.sender) < maxMintsPerWallet, "Max mint amount allowed exceeded for this wallet for CuredCats");
         require(serumAddress.balanceOf(msg.sender, SERUM_TOKEN_ID) > SERUM_COST * QTY , "Insufficient value of serum to transform a curedCat");
         require(mutantCatsAddress.balanceOf(msg.sender) > QTY, "Must be a holder mutantCats Token to transform into each Curedcats");
         //burn serum
@@ -128,7 +125,7 @@ contract CuredCats is ERC721Enumerable, Ownable {
         }
     }
 
-    // Withdraw Cats
+    // Withdraw Cured Cats
     /*  function withdrawCuredCats() external onlyOwner {
         uint256 curedCatSupply = contractAddress.balanceOf(address(this));
         contractAddress.transferFrom(address(this), msg.sender, curedCatSupply);
