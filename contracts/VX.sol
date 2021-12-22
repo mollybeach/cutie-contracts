@@ -10,20 +10,15 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
 
 /*
+    Breed a VX with two curedCats with Fish
     - Burn a Serum to transform a Mutant Cat into a Cured Cat
     it'll be an erc 721 mint contract
     You’ll need IERC1155 for this
     It’s an open zeppelin contract
-    They will burn the serum
+    They will burn the fish
     So u need to transfer it to 0 address when u mint
     And they need to transfer the mutantcat to the contract when minting
-    Create a method that can withdraw the cats
-
-
-    Breed a VX with two curedCats with Fish
-
-    
-
+    Create a method that can withdraw the VX
 */
 
 contract VX is ERC721Enumerable, Ownable , IERC721Receiver {

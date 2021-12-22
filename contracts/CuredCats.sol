@@ -10,6 +10,7 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
 
 /*
+    Transform a Mutant Cat into a Cured Cat using Serum
     - Burn a Serum to transform a Mutant Cat into a Cured Cat
     it'll be an erc 721 mint contract
     You’ll need IERC1155 for this
