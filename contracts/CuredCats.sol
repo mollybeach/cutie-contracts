@@ -118,12 +118,10 @@ contract CuredCats is ERC721Enumerable, Ownable , IERC721Receiver {
             //burn serum
             serumAddress.safeTransferFrom(msg.sender, zeroAddress, SERUM_TOKEN_ID,  1, ""); 
             emit BurnSerumEvent(_msgSender(), SERUM_TOKEN_ID);
-
             //transfer mutantCats
             MUTANT_CATS_TOKEN_ID = _tokenIds[i];
             mutantCatsAddress.safeTransferFrom(msg.sender, contractAddress, MUTANT_CATS_TOKEN_ID);
             emit TransferMutantCatEvent(msg.sender, contractAddress, MUTANT_CATS_TOKEN_ID); 
-
             //mint curedCats
             CURED_CATS_TOKEN_ID = curedCatTotal + 1;
             _mint(_msgSender(), curedCatTotal++);
