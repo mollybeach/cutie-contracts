@@ -10,17 +10,13 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
 
 /*
-    Transform a Mutant Cat into a Cured Cat using Serum
-    - Burn a Serum to transform a Mutant Cat into a Cured Cat
-    it'll be an erc 721 mint contract
-    You’ll need IERC1155 for this
-    It’s an open zeppelin contract
-    They will burn the serum
+    Transform a Mutant Cat into a Cured Cat using Serum:
+    - Burn a Serum per transformation of a Cat
+    It'll be an erc 721 mint contract
+    You’ll need IERC1155 for Serum
     So u need to transfer it to 0 address when u mint
-    And they need to transfer the mutantcat to the contract when minting
+    And they need to transfer the mutantcat to the contract address when minting
     Create a method that can withdraw the cats
-    
-
 */
 
 contract CuredCats is ERC721Enumerable, Ownable , IERC721Receiver {
@@ -29,10 +25,8 @@ contract CuredCats is ERC721Enumerable, Ownable , IERC721Receiver {
     event TransferMutantCatEvent(address indexed from, address indexed to, uint256 indexed tokenId);
     event MintCuredCatEvent(address indexed sender, uint256 startWith);
 
-    //uint256 supply counters 
-    uint256 public curedCatTotal;
-
     //uint256
+    uint256 public curedCatTotal;
     uint256 public curedCatSupply = 999;
     uint256 public MUTANT_CATS_TOKEN_ID;
     uint256 public CURED_CATS_TOKEN_ID;
@@ -112,8 +106,7 @@ contract CuredCats is ERC721Enumerable, Ownable , IERC721Receiver {
         require(curedCatTotal + QTY <= curedCatSupply, "This mint would pass max CuredCats supply");
         require(serumAddress.balanceOf(msg.sender, SERUM_TOKEN_ID) >= SERUM_COST * QTY , "Insufficient value of serum to transform a curedCat");
         require(mutantCatsAddress.balanceOf(msg.sender) > QTY, "Must be a holder mutantCats Token to transform into each Curedcats");
-
-       //transfrorm mutantCats into curedCats
+       //Transform MutantCats into CuredCats
         for (uint256 i = 0; i < QTY; i++) {
             //burn serum
             serumAddress.safeTransferFrom(msg.sender, zeroAddress, SERUM_TOKEN_ID,  1, ""); 
@@ -129,14 +122,11 @@ contract CuredCats is ERC721Enumerable, Ownable , IERC721Receiver {
             emit MintCuredCatEvent(msg.sender, CURED_CATS_TOKEN_ID);
         }
     }
-
     // Withdraw Cured Cats
     function withdrawCuredCats() external onlyOwner {
         curedCatSupply = curedCatsAddress.balanceOf(address(this));
         curedCatsAddress.transferFrom(address(this), msg.sender, curedCatSupply);
     }
-
-
 }
 
 
