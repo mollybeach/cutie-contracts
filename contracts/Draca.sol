@@ -8,7 +8,6 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 
 /*- Total supply: 5000
-
 1 Genesis NFT in wallet = 1 free mint (996 Reserved Supply)
 - dev mint function that allows us to mint for free (300 Reserved Supply)
 - Public mint 0.02 ETH mint PRICE (3704 Supply)
@@ -112,7 +111,7 @@ contract Draca is ERC721Enumerable, Ownable {
         require(started, "not started");
         require(_qty > 0 , "need to mint at least 1 NFT");
         require(freeTotal + _qty <= freeSupply, "This mint would pass max freesupply");
-        require(genesisAddress.balanceOf(msg.sender) > 1, "Must be a holder of Genesis Token to receive a free mint of Draca");
+        require(genesisAddress.balanceOf(msg.sender) > 1,  "Must be a holder of Genesis Token to receive a free mint of Draca");
         require(IERC721(contractAddress).balanceOf(msg.sender) < maxMintsPerWallet, "Max mint amount allowed exceeded for this wallet for free mints");
         _mint(msg.sender, freeTotal + _qty);
         mint(_qty);
@@ -132,4 +131,3 @@ contract Draca is ERC721Enumerable, Ownable {
     }
 
 }
-
