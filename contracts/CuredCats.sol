@@ -8,7 +8,6 @@ import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
-
 /*
     Transform a Mutant Cat into a Cured Cat using Serum:
     - Burn a Serum per transformation of a Cat
