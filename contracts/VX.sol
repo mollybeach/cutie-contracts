@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
 /*
     Breed a VX with two curedCats with Fish
-    - Burn a Serum to transform a Mutant Cat into a Cured Cat
+    - Burn a Fish to breed a VS
     it'll be an erc 721 mint contract
     You’ll need IERC1155 for this
     It’s an open zeppelin contract
@@ -37,7 +37,10 @@ contract VX is ERC721Enumerable, Ownable , IERC721Receiver {
     uint256 public VXSupply = 999;
     uint256 public CURED_CATS_TOKEN_ID = 1; 
     uint256 public FISH_TOKEN_ID = 1;
-    uint256[] VXLastBred = new uint256[](999);
+    uint256[] curedCatsLastBred = new uint256[](999);
+
+    //uint 32
+    uint32 public breedingCooldown = uint32(8 hours);
 
     //addressses
     IERC721 public VXAddress;
@@ -47,7 +50,6 @@ contract VX is ERC721Enumerable, Ownable , IERC721Receiver {
     address public contractAddress;
 
     //mappings
-    mapping(address => uint256) public addressMintedBalance;
     mapping (uint256 => string) private _tokenURIs;
     
     //strings
@@ -105,8 +107,8 @@ contract VX is ERC721Enumerable, Ownable , IERC721Receiver {
     function totalSupply() public view virtual override returns (uint256) {
         return VXTotal;
     }
-    function getLastBredVX(uint256 tokenId) public view returns (uint256) {
-        return VXLastBred[tokenId];
+    function getLastBredCuredCats(uint256 tokenId) public view returns (uint256) {
+        return curedCatsLastBred[tokenId];
     }
 
         //Allows Public to breed VX with two curedCats tokens using Fish
@@ -114,22 +116,29 @@ contract VX is ERC721Enumerable, Ownable , IERC721Receiver {
         require(started, "not started");
         require(VXTotal + 2 <= VXSupply, "This mint would pass max VX supply");
         require(fishAddress.balanceOf(msg.sender, FISH_TOKEN_ID) > FISH_COST, "Insufficient value of FISH to breed a VX");
-        require(curedCatsAddress.balanceOf(msg.sender) > 2, "Must be a holder 2 Curedcats Token to breed VX"); 
+        require(curedCatsAddress.balanceOf(msg.sender) > 2, "Must be a holder 2 Cured Cats Tokens to breed  a VX"); 
         require(curedCatsAddress.ownerOf(_tokenIds[0]) == _msgSender() && curedCatsAddress.ownerOf(_tokenIds[1]) == _msgSender(), "must be the owner of both cured cats to breed");
-        fishAddress.safeTransferFrom(msg.sender, zeroAddress,FISH_TOKEN_ID,  FISH_TOKEN_ID, "0x0"); 
+         // both curedCats must not have been recently bred
+        require(block.timestamp - curedCatsLastBred[_tokenIds[0]] > breedingCooldown && block.timestamp - curedCatsLastBred[_tokenIds[1]] > breedingCooldown,"one or more curedCats is on breeding cooldown");
+        // burn fish
+        fishAddress.safeTransferFrom(msg.sender, zeroAddress, FISH_TOKEN_ID,  1, ""); 
         emit BurnFishEvent(_msgSender(), FISH_TOKEN_ID);
+        // transfer cured cats 
         curedCatsAddress.safeTransferFrom(msg.sender, contractAddress, CURED_CATS_TOKEN_ID);
         emit TransferCuredCatEvent(msg.sender, contractAddress, CURED_CATS_TOKEN_ID);  
+         //mint VX
         _mint(_msgSender(), VXTotal++);
-        addressMintedBalance[msg.sender] += 1;
         emit MintVXEvent(_msgSender(), VXTotal);
+         // Assign the current time to the curedCats ids used for this breeding
+        curedCatsLastBred[_tokenIds[0]] = block.timestamp;
+        curedCatsLastBred[_tokenIds[1]] = block.timestamp;
     }
 
     // Withdraw Cats
     function withdrawVX() external onlyOwner {
-        supplyVX = VXAddress.balanceOf(address(this));
-        VXAddress.transferFrom(address(this), msg.sender,supplyVX);
-    }
+        supplyVX = VXAddress.balanceOf(contractAddress);
+        VXAddress.transferFrom(contractAddress, msg.sender, supplyVX);
+    } 
 
 
 }

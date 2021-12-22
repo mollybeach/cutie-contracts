@@ -48,7 +48,9 @@ task('deploy-vx').setAction(async function () {
     const totalSupply = await instance.callStatic.totalSupply();
     console.log(totalSupply.toString());
     console.log("totalSupply() passed successfully");
-    
+// run getLastBredCuredCat function
+    const getLastBredCuredCat = await instance.callStatic.getLastBredCuredCat(1);
+    console.log(getLastBredCuredCat.toString());
 //run MintFunction
     const runBreedVX = await instance.connect(deployer).breedCuredCat(QTY);
     await runBreedVX.wait();
@@ -57,7 +59,6 @@ task('deploy-vx').setAction(async function () {
 //run withdrawVX function
     const runWithdrawVX = await instance.connect(deployer).withdrawVX();
     await runWithdrawVX.wait();
-
     console.log(`Deployed VX to: ${instance.address}`);
     deployments.VX = instance.address;
     //write VX to deployments json file 

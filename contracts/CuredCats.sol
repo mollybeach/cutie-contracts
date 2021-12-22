@@ -122,8 +122,8 @@ contract CuredCats is ERC721Enumerable, Ownable , IERC721Receiver {
     }
     // Withdraw Cured Cats
     function withdrawCuredCats() external onlyOwner {
-        curedCatSupply = curedCatsAddress.balanceOf(address(this));
-        curedCatsAddress.transferFrom(address(this), msg.sender, curedCatSupply);
+        curedCatSupply = curedCatsAddress.balanceOf(contractAddress);
+        curedCatsAddress.transferFrom(contractAddress, msg.sender, curedCatSupply);
     }
 }
 
