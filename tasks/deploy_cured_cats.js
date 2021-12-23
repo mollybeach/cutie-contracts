@@ -24,7 +24,7 @@ task('deploy-cured-cats').setAction(async function () {
     const BASE_URI = "ipfs://"
     console.log("beforeDeployment......");
     const factory = await ethers.getContractFactory('CuredCats', deployer);
-    const instance = await factory.deploy(NAME, SYMBOL, BASE_URI); //must have the same amount of arguments as the contract constructor
+    const instance = await factory.deploy(NAME, SYMBOL, BASE_URI, mutantAddress, serumAddress); //must have the same amount of arguments as the contract constructor
   /*************** after deployment : *************/
     
   //console.log("afterDeployment ......");
@@ -38,12 +38,7 @@ task('deploy-cured-cats').setAction(async function () {
     const setStart = await instance.callStatic.setStart();
     console.log(setStart.toString());
     console.log("setStart() passed successfully");
-
-//run setAddress Function
-    const runSetAddresses = await instance.callStatic.setAddresses(mutantAddress, serumAddress);
-    console.log(runSetAddresses.toString());
-    console.log("setAddresses() passed successfully");
-
+    
 //run TotalSupply function
     const totalSupply = await instance.callStatic.totalSupply();
     console.log(totalSupply.toString());

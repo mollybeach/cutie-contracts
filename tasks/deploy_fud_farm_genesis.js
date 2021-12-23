@@ -36,10 +36,6 @@ task('deploy-fud-farm-genesis').setAction(async function () {
     const factory = await ethers.getContractFactory('FudFarmGenesis', deployer);
     const instance = await factory.deploy(NAME, SYMBOL, BASE_URI, fudfarmAddress, cropAddress, stakeAddress ); //must have the same amount of arguments as the contract constructor
 
-
-
-
-
   /*************** after deployment : *************/
     
   //console.log("afterDeployment ......");

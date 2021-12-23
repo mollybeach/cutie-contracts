@@ -52,11 +52,15 @@ contract CuredCats is ERC721Enumerable, Ownable , IERC721Receiver {
 
     //constructor args 
     constructor(
-        string memory _name,
-        string memory _symbol,
-        string memory baseURI_
-    ) ERC721(_name, _symbol) {
+        string memory name_, 
+        string memory symbol_, 
+        string memory baseURI_, 
+        address _mutantCatsAddress, 
+        address _serumAddress
+    ) ERC721(name_, symbol_) {
         baseURI = baseURI_;
+        mutantCatsAddress = IERC721(_mutantCatsAddress);
+        serumAddress = IERC1155(_serumAddress);
         contractAddress = address(this);
         curedCatsAddress = IERC721(contractAddress);
     }
@@ -67,10 +71,6 @@ contract CuredCats is ERC721Enumerable, Ownable , IERC721Receiver {
     }
     function setBaseURI(string memory _newURI) public onlyOwner {
         baseURI = _newURI;
-    }
-    function setAddresses(address _mutantCatsAddress, address _serumAddress) public onlyOwner {
-        mutantCatsAddress = IERC721(_mutantCatsAddress);
-        serumAddress = IERC1155(_serumAddress);
     }
     //ERC271 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
