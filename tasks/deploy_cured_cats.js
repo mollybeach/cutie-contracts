@@ -51,7 +51,7 @@ task('deploy-cured-cats').setAction(async function () {
     
 //run MintFunction
     const runTransformCuredCat = await instance.connect(deployer).breedCuredCat(QTY);
-    await runBreedCuredCat.wait();
+    await runTransformCuredCat.wait();
     console.log("mint() passed successfully");
 
 //run withdrawCuredCats function

@@ -32,9 +32,9 @@ task('deploy-fud-farm-genesis').setAction(async function () {
 
     const TIMES = 1;
     const BASE_URI = "ipfs://"
-    //console.log("beforeDeployment......");
+    console.log("beforeDeployment......");
     const factory = await ethers.getContractFactory('FudFarmGenesis', deployer);
-   //const instance = await factory.deploy(NAME, SYMBOL, BASE_URI, fudfarmAddress, cropAddress, stakeAddress ); //must have the same amount of arguments as the contract constructor
+    const instance = await factory.deploy(NAME, SYMBOL, BASE_URI, fudfarmAddress, cropAddress, stakeAddress ); //must have the same amount of arguments as the contract constructor
 
 
 
@@ -42,8 +42,8 @@ task('deploy-fud-farm-genesis').setAction(async function () {
 
   /*************** after deployment : *************/
     
-    console.log("afterDeployment ......");
-    const instance = await ethers.getContractAt('FudFarmGenesis',deployments.FudFarmGenesis);
+  //console.log("afterDeployment ......");
+  //const instance = await ethers.getContractAt('FudFarmGenesis',deployments.FudFarmGenesis);
 
   /********call and await the instance to be deployed ********/
     await instance.deployed();

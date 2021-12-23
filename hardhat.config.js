@@ -38,11 +38,11 @@ require("./tasks/set_stacked_staked_rewards");
 require("./tasks/deploy_default_erc20");
 require("./tasks/deploy_lottery");
 require("./tasks/deploy_draca");
-
+require("./tasks/deploy_fud_farm_genesis");
 require("./tasks/deploy_cured_cats");
 */
-require("./tasks/deploy_fud_farm_genesis");
 
+require("./tasks/deploy_cured_cats");
 
 
 
