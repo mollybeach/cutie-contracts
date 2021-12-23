@@ -29,7 +29,6 @@
   "function safeTransferFrom(address from, address to, uint256 tokenId)",
   "function safeTransferFrom(address from, address to, uint256 tokenId, bytes _data)",
   "function serumAddress() view returns (address)",
-  "function setAddresses(address _mutantCatsAddress, address _serumAddress)",
   "function setApprovalForAll(address operator, bool approved)",
   "function setBaseURI(string _newURI)",
   "function setStart()",

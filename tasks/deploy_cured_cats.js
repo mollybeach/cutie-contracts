@@ -16,7 +16,7 @@ task('deploy-cured-cats').setAction(async function () {
     const [deployer] = await ethers.getSigners();
     const mutantAddress = `0xaAdBA140Ae5e4c8a9eF0Cc86EA3124b446e3E46A`
     const serumAddress = `0x1c579006cd499871ac39aa2bf787462de603936c`;
-   // const zeroAddress = `0x0000000000000000000000000000000000000000`;
+
    /*************** before deployment : *************/
     
     const NAME = "CuredCats";
@@ -38,7 +38,7 @@ task('deploy-cured-cats').setAction(async function () {
     const setStart = await instance.callStatic.setStart();
     console.log(setStart.toString());
     console.log("setStart() passed successfully");
-    
+
 //run TotalSupply function
     const totalSupply = await instance.callStatic.totalSupply();
     console.log(totalSupply.toString());
