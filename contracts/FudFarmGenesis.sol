@@ -15,6 +15,7 @@ contract FudFarmGenesis is ERC721Enumerable, Ownable {
     event Mint(address indexed sender, uint256 startWith, uint256 times);
 
     mapping (address => bool) public presaleWhitelist;
+    
 
     //supply counters 
     uint256 public total;
@@ -26,8 +27,11 @@ contract FudFarmGenesis is ERC721Enumerable, Ownable {
     uint256 public totalMax = 777;
     //token Index tracker 
 
-    uint256 public price = 40000000000000000;
-    uint256 public cropPrice = 400000000000000000000;
+   // uint256 public price = 40000000000000000;
+   // uint256 public cropPrice = 400000000000000000000;
+
+    uint256 public price = 4;
+    uint256 public cropPrice = 4;
 
     //string
     string public baseURI;
@@ -64,15 +68,12 @@ contract FudFarmGenesis is ERC721Enumerable, Ownable {
             presaleWhitelist[_addresses[i]] = true;
         }
     }
-
-    //erc721 
+    //ERC271 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
-        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token.");
-        
-        string memory baseURI = _baseURI();
-        return bytes(baseURI).length > 0
-            ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : '.json';
+        require(_exists(tokenId), "tokenId does not exist.");
+        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, tokenId.toString(), ".json")) : ".json";
     }
+
     function setPresaleStart(bool _start) public onlyOwner {
         presaleStarted = _start;
     }
@@ -99,7 +100,7 @@ contract FudFarmGenesis is ERC721Enumerable, Ownable {
     function presaleMint(uint256 _times, uint256 _cropAmount) public {
         require(presaleStarted, "presale has not started.");
         require(total + _times <= totalCrop, "Exceed crop allocation");
-        require(_cropAmount == _times * cropPrice, "value error, please check price");
+        require(_cropAmount >= _times * cropPrice, "value error, please check price");
         require(presaleWhitelist[msg.sender], "must be on presale whitelist"); 
         require(_times <= presaleMaxWallet, "cannot mint more than 3");
         require(IERC721(contractAddress).balanceOf(msg.sender) < presaleMaxWallet, "cannot have more than 3");
@@ -113,7 +114,7 @@ contract FudFarmGenesis is ERC721Enumerable, Ownable {
     function publicMint(uint256 _times, uint256 _cropAmount) public {
         require(started, "presale has not started.");
         require(total + _times <= totalCrop, "Exceed crop allocation");
-        require(_cropAmount == _times * cropPrice, "value error, please check price");
+        require(_cropAmount >= _times * cropPrice, "value error, please check price");
         uint256 depositBalance = IStaking(stakeAddress).depositsOf(msg.sender).length;
         require(fudFarmAddress.balanceOf(msg.sender) > 0 || depositBalance > 0, "must hold at least 1 fudFarm");
         require(_times <= publicMaxWallet, "cannot mint more than 3");
