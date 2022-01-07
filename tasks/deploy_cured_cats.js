@@ -35,19 +35,21 @@ task('deploy-cured-cats').setAction(async function () {
 
  /**************** test contract functions:  *************/
  //run  setStart Function 
-    const setStart = await instance.callStatic.setStart();
-    console.log(setStart.toString());
+    const runSetStart = await instance.callStatic.setStart();
+    console.log(runSetStart.toString());
     console.log("setStart() passed successfully");
 
 //run TotalSupply function
-    const totalSupply = await instance.callStatic.totalSupply();
-    console.log(totalSupply.toString());
+    const runTotalSupply = await instance.callStatic.totalSupply();
+    console.log(runTotalSupply.toString());
     console.log("totalSupply() passed successfully");
     
 //run MintFunction
-    const runTransformCuredCat = await instance.connect(deployer).breedCuredCat(QTY);
-    await runTransformCuredCat.wait();
-    console.log("mint() passed successfully");
+  //  const runTransformCuredCat = await instance.connect(deployer).transformCuredCat(QTY);
+   // await runTransformCuredCat.wait();
+  //  const runTransformCuredCat = await instance.callStatic.transformCuredCat(QTY);
+  //  console.log(runTransformCuredCat.toString());
+  //  console.log("transformCuredCat() passed successfully");
 
 //run withdrawCuredCats function
     const runWithdrawCuredCats = await instance.connect(deployer).withdrawCuredCats();
